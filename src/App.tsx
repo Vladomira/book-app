@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import { HomePage } from "./pages/HomePage";
+import { BooksPage } from "./pages/BooksPage";
+import { SinglePage } from "./pages/SinglePage";
+import { AuthorsPage } from "./pages/AuthorsPage";
+import { NotesPage } from "./pages/NotesPage";
+import { NotfoundPage } from "./pages/NotfoundPage";
+import { AuthPage } from "./pages/AuthPage";
+
+import { Layout } from "./components/Layout";
+import { RequireAuth } from "./hoc/RequireAuth";
+import { AuthProvider } from "./hoc/AuthProvider";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+   return (
+      <AuthProvider>
+         <Routes>
+            <Route path="/" element={<Layout />}>
+               <Route index path="/" element={<HomePage />} />
+               <Route path="books" element={<BooksPage />} />
+               <Route path="books/:id" element={<SinglePage page="book" />} />
+
+               <Route path="authors" element={<AuthorsPage />} />
+               <Route
+                  path="authors/:id"
+                  element={<SinglePage page="author" />}
+               />
+
+               <Route path="auth" element={<AuthPage />} />
+               {/* user/id/bookId/notes */}
+               <Route
+                  path="user/:userId/book/:id/notes"
+                  element={
+                     <RequireAuth>
+                        <NotesPage />
+                     </RequireAuth>
+                  }
+               />
+               <Route path="*" element={<NotfoundPage />} />
+            </Route>
+         </Routes>
+      </AuthProvider>
+   );
 }
 
 export default App;
