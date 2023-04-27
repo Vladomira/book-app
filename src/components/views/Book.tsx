@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import { Link } from "@mui/material";
 
 import { SinglePageProps } from "../../types";
 

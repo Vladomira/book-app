@@ -1,10 +1,4 @@
-import {
-   FC,
-   PropsWithChildren,
-   ReactNode,
-   createContext,
-   useState,
-} from "react";
+import { PropsWithChildren, createContext, useState } from "react";
 
 type User = string | null;
 type CallBack = () => void;

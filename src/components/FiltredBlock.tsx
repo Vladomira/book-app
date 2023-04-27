@@ -1,5 +1,4 @@
-import { FC, SyntheticEvent, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { FC, SyntheticEvent } from "react";
 
 type FiltredType = {
    setSearchParams: (prop: { book: string }) => void;
