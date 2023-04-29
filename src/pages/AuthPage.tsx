@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { SyntheticEvent, useState } from "react";
+import { FormEvent, SyntheticEvent, useState } from "react";
 import { useAuth } from "../hook/useAuth";
 
 export const AuthPage = () => {
@@ -10,7 +10,8 @@ export const AuthPage = () => {
 
    const fromPage = location.state?.from?.pathname || "/";
 
-   const handleSubmit = (event: SyntheticEvent) => {
+   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+      // event.preventDefault();
       event.preventDefault();
       signIn(userName, () => navigate(fromPage, { replace: true }));
    };
@@ -18,7 +19,7 @@ export const AuthPage = () => {
    return (
       <div>
          <h1>Login</h1>
-         <form onSubmit={handleSubmit}>
+         <form onSubmit={(event) => handleSubmit(event)}>
             <label>
                Name:
                <input
