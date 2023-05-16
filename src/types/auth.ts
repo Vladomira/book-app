@@ -33,3 +33,4 @@ export const initialUserForm = {
    email: "",
    password: "",
 };
+export type UserState = { auth: AuthState };

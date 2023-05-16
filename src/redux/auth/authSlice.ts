@@ -27,7 +27,6 @@ export const authSlice = createSlice({
                id: payload.user.id,
             };
             state.token = payload.user.token;
-            state.isLoggedIn = true;
          })
          .addCase(authOperations.logout.fulfilled, (state, { payload }) => {
             state.user = {
@@ -37,7 +36,18 @@ export const authSlice = createSlice({
             };
             state.token = "";
             state.isLoggedIn = false;
-         });
+         })
+         .addCase(
+            authOperations.getCurrentUser.fulfilled,
+            (state, { payload }) => {
+               state.user = {
+                  email: payload.user.email,
+                  name: payload.user.name,
+                  id: payload.user.id,
+               };
+               state.isLoggedIn = true;
+            }
+         );
    },
 });
 

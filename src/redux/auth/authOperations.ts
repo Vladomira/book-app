@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
 import axios from "axios";
-import { FormData } from "../../types/auth";
+import { UserState, FormData } from "../../types/auth";
 
 axios.defaults.baseURL = "http://localhost:8080/api/";
 
@@ -22,7 +21,6 @@ const register = createAsyncThunk(
          token.set(data.user.token);
          return data;
       } catch (error: any) {
-         toast.error("Something went wrong");
          return rejectWithValue(error);
       }
    }
@@ -40,8 +38,6 @@ const logIn = createAsyncThunk(
 
          return data;
       } catch (error) {
-         toast.error("Incorrect data, please try again");
-
          return rejectWithValue(error);
       }
    }
@@ -55,33 +51,33 @@ const logout = createAsyncThunk(
          token.unset();
          return data;
       } catch (error) {
-         toast.error("Something went wrong");
          return rejectWithValue(error);
       }
    }
 );
 
-// const fetchCurrentUser = createAsyncThunk(
-//    "auth/refresh",
-//    async (_, thunkAPI) => {
-//       const state = thunkAPI.getState();
+const getCurrentUser = createAsyncThunk("auth/refresh", async (_, thunkAPI) => {
+   const state = thunkAPI.getState() as UserState;
 
-//       const persistedToken = state.auth.token; //localStorage
-//       if (persistedToken === null) {
-//          return thunkAPI.rejectWithValue();
-//       } else {
-//          //  token.set(persistedToken);
-//          try {
-//             const { data } = await axios.get("/users/current");
-//             return data;
-//          } catch (error) {}
-//       }
-//    }
-// );
+   const persistedToken = state.auth.token;
+   if (!persistedToken) {
+      return thunkAPI.rejectWithValue({ message: "Please authorize" });
+   } else {
+      try {
+         token.set(persistedToken);
+         const { data } = await axios.get("/user/current");
+
+         return data;
+      } catch (error) {
+         return thunkAPI.rejectWithValue(error);
+      }
+   }
+});
 
 const authOperations = {
    register,
    logIn,
    logout,
+   getCurrentUser,
 };
 export default authOperations;

@@ -8,7 +8,7 @@ import { authOperations } from "../redux/auth";
 import "../App.css";
 
 export const Layout = () => {
-   const userId = useAppSelector((state: RootState) => state.auth.user.id);
+   const user = useAppSelector((state: RootState) => state.auth.user);
    const dispatch = useDispatch<AppDispatch>();
 
    return (
@@ -18,15 +18,25 @@ export const Layout = () => {
             <CustomLink to="/books">Books</CustomLink>
             <CustomLink to="/authors">Authors</CustomLink>
             <CustomLink to="/auth">Signin</CustomLink>
-            {userId && (
-               <button
-                  type="button"
-                  onClick={() =>
-                     dispatch(authOperations.logout({ id: userId }))
-                  }
+            {user.name && (
+               <div
+                  style={{
+                     display: "flex",
+                     flexDirection: "column",
+                  }}
                >
-                  Logout
-               </button>
+                  <p style={{ color: "olive", margin: "0px 0px 5px" }}>
+                     Welcome, {user.name}
+                  </p>
+                  <button
+                     type="button"
+                     onClick={() =>
+                        dispatch(authOperations.logout({ id: user.id }))
+                     }
+                  >
+                     Logout
+                  </button>
+               </div>
             )}
          </header>
          <main className="container">
