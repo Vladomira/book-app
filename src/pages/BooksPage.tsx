@@ -1,29 +1,54 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import { Stack } from "@mui/material";
+import Pagination from "@mui/material/Pagination";
 import { FiltredBlock } from "../components/FiltredBlock";
-// import { env } from "process";
-// import { Link } from "@mui/material";
+import { BooksType, initialBook } from "../types/book";
+import { BookItem } from "../components/BookItem";
 
 export const BooksPage = () => {
-   const [data, setData] = useState([
-      { body: "", id: 0, title: "", userId: 0 },
-   ]);
+   const [data, setData] = useState<BooksType[]>([initialBook]);
+   const [countPage, setCountPage] = useState<number>(1);
+   const [currentPage, setCurrentPage] = useState<number | undefined>(1);
    const [searchParams, setSearchParams] = useSearchParams();
    const [query, setQuery] = useState("");
    const bookQuery = searchParams.get("book") || "";
-   // AIzaSyDyOmRZlMhsG5lRQl5Xb4ObRxZ0hY5uaOU
-   console.log("dot.", process.env.REACT_APP_API_KEY);
+   // const apiKey = "AIzaSyDyOmRZlMhsG5lRQl5Xb4ObRxZ0hY5uaOU";
 
+   const url = "https://www.googleapis.com/books/v1/volumes?";
    useEffect(() => {
-      // fetch("https://www.googleapis.com/books")
-      //    .then((res) => res.json())
-      //    .then((data) => console.log("data", data));
-      // fetch("https://jsonplaceholder.typicode.com/posts")
-      //    .then((res) => res.json())
-      //    .then((data) => setData(data))
-      //    .catch((error) => console.log("error:", error));
-   }, []);
-   // https://www.googleapis.com/books
+      const fetchData = async () => {
+         const data = await fetchBooks(10, 0);
+         return data;
+      };
+      fetchData()
+         .then((data) => {
+            setCountPage(Math.floor(data.totalItems / 10));
+            setData([...data.items]);
+         })
+         .catch(console.error);
+   }, [query]);
+
+   const fetchBooks = (limit: number | null, offset: number | null) => {
+      return fetch(
+         `${url}q=${
+            query.split(" ").join("+") || "hardcover-fiction"
+         }&maxResults=${limit}&startIndex=${offset}&country=IN&langRestrict=en
+        `
+      ).then((res) => res.json());
+   };
+   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+      event.preventDefault();
+      setCurrentPage(value);
+      const fetchData = async () => {
+         return await fetchBooks(10, value * 10 - 10);
+      };
+      fetchData()
+         .then((data) => {
+            setData([...data.items]);
+         })
+         .catch(console.error);
+   };
 
    return (
       <>
@@ -32,19 +57,35 @@ export const BooksPage = () => {
             setQuery={setQuery}
             setSearchParams={setSearchParams}
          />
-         <ul>
-            {data
-               .filter((book) => book.title.includes(bookQuery))
-               .map((el) => {
-                  return (
-                     <li key={el.id}>
-                        <Link to={`/books/${el.id}`}>
-                           <p>{el.title}</p>
-                        </Link>
-                     </li>
-                  );
-               })}
+         <ul
+            style={{
+               display: "flex",
+               flexWrap: "wrap",
+               justifyContent: "center",
+            }}
+         >
+            {data.length > 0 &&
+               data
+                  .filter((book) => book.volumeInfo.title.includes(bookQuery))
+
+                  .map((el) => <BookItem key={el.id} el={el} />)}
          </ul>
+         {data.length > 0 && (
+            <Stack spacing={2}>
+               <Pagination
+                  count={countPage}
+                  page={currentPage}
+                  onChange={handleChange}
+               />
+            </Stack>
+         )}
       </>
    );
 };
+// "https://www.googleapis.com/books/v1/volumes?q=isbn:" +
+//    query +
+//    "&key=" +
+//    apiKey,
+// { method: "get" }
+
+// nytimes: jC3tUx7sOOydWYTSMMWEi7tCwDWvUzd3

@@ -9,37 +9,31 @@ import { AuthPage } from "./pages/AuthPage";
 
 import { Layout } from "./components/Layout";
 import { RequireAuth } from "./hoc/RequireAuth";
-import { AuthProvider } from "./hoc/AuthProvider";
 
 function App() {
    return (
-      <AuthProvider>
-         <Routes>
-            <Route path="/" element={<Layout />}>
-               <Route index path="/" element={<HomePage />} />
-               <Route path="books" element={<BooksPage />} />
-               <Route path="books/:id" element={<SinglePage page="book" />} />
+      <Routes>
+         <Route path="/" element={<Layout />}>
+            <Route index path="/" element={<HomePage />} />
+            <Route path="books" element={<BooksPage />} />
+            <Route path="books/:id" element={<SinglePage page="book" />} />
 
-               <Route path="authors" element={<AuthorsPage />} />
-               <Route
-                  path="authors/:id"
-                  element={<SinglePage page="author" />}
-               />
+            <Route path="authors" element={<AuthorsPage />} />
+            <Route path="authors/:id" element={<SinglePage page="author" />} />
 
-               <Route path="auth" element={<AuthPage />} />
-               {/* user/id/bookId/notes */}
-               <Route
-                  path="user/:userId/book/:id/notes"
-                  element={
-                     <RequireAuth>
-                        <NotesPage />
-                     </RequireAuth>
-                  }
-               />
-               <Route path="*" element={<NotfoundPage />} />
-            </Route>
-         </Routes>
-      </AuthProvider>
+            <Route path="auth" element={<AuthPage />} />
+            {/* user/id/bookId/notes */}
+            <Route
+               path="user/:userId/book/:id/notes"
+               element={
+                  <RequireAuth>
+                     <NotesPage />
+                  </RequireAuth>
+               }
+            />
+            <Route path="*" element={<NotfoundPage />} />
+         </Route>
+      </Routes>
    );
 }
 
