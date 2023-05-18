@@ -4,16 +4,20 @@ import { useAppSelector } from "../redux/hooks";
 import { AppDispatch, RootState } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { booksOperations } from "../redux/user-books";
+// import { BookData } from "../types/books-operations";
 
 export const MyPage = () => {
    const userId = useAppSelector((state: RootState) => state.auth.user.id);
-   const userBooks = useAppSelector((state: RootState) => state.books);
+   const userBooks = useAppSelector((state: RootState) => state);
    const dispatch = useDispatch<AppDispatch>();
 
    useEffect(() => {
       dispatch(booksOperations.getBooks());
-   }, [userId]);
+   }, [dispatch]);
 
+   const deleteUserBook = (id: number) => {
+      dispatch(booksOperations.deleteBook(id));
+   };
    return (
       <div>
          <div>Bar</div>
@@ -27,7 +31,7 @@ export const MyPage = () => {
             >
                My books
             </Link>
-            {userBooks.length > 0 && (
+            {userBooks.books.length > 0 && (
                <ul
                   style={{
                      display: "flex",
@@ -38,7 +42,7 @@ export const MyPage = () => {
                      marginBottom: "50px",
                   }}
                >
-                  {userBooks.map((el) => (
+                  {userBooks.books.map((el) => (
                      <li
                         key={el.bookId}
                         style={{
@@ -89,6 +93,12 @@ export const MyPage = () => {
                               </p>
                            </div>
                         </Link>
+                        <button
+                           type="button"
+                           onClick={() => deleteUserBook(el.id)}
+                        >
+                           Delete from my books
+                        </button>
                      </li>
                   ))}
                </ul>

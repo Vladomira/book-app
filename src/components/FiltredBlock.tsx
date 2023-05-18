@@ -12,8 +12,6 @@ export const FiltredBlock: FC<FiltredType> = ({
    setQuery,
 }) => {
    const handleSubmit = (event: SyntheticEvent) => {
-      console.log("event", event.currentTarget);
-
       event.preventDefault();
       setSearchParams({ book: query });
    };

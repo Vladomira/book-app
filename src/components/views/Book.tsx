@@ -10,8 +10,6 @@ export const Book: FC<SinglePageProps> = ({ id }) => {
 
    useEffect(() => {
       fetchById(id).then((data) => {
-         console.log("data", data);
-
          setData(data);
       });
    }, [id]);

@@ -23,7 +23,10 @@ export const BookItem = ({ el }: BookItemProps) => {
                favorite: true,
                finished: false,
                inProgress: true,
-               author: el.volumeInfo.authors[0],
+               author:
+                  el.volumeInfo.authors?.length > 0
+                     ? el.volumeInfo.authors[0]
+                     : "",
                title: el.volumeInfo.title,
                image: getImage,
             },

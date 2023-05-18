@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import booksOperations from "./userBooksOperations";
-import { booksInitState } from "../../types/books-operations";
+import { booksInitState } from "../../types/book";
 
 export const userBooksSlice = createSlice({
    name: "books",
@@ -13,7 +13,10 @@ export const userBooksSlice = createSlice({
          })
          .addCase(
             booksOperations.getBooks.fulfilled,
-            (_, { payload }) => payload
+            (state, { payload }) => payload
+         )
+         .addCase(booksOperations.deleteBook.fulfilled, (state, { payload }) =>
+            state.filter((book) => book.id !== payload)
          );
    },
 });
