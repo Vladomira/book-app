@@ -12,18 +12,20 @@ import {
 import storage from "redux-persist/lib/storage";
 import { Persistor } from "redux-persist";
 import authReducer from "./auth/authSlice";
+import userBooksReducer from "./user-books/userBooksSlice";
 
 const authPersistConfig = {
    key: "auth",
    storage,
    whitelist: ["token"],
 };
+const rootReducer = {
+   auth: persistReducer(authPersistConfig, authReducer),
+   books: userBooksReducer,
+};
 const store = configureStore({
-   reducer: {
-      auth: persistReducer(authPersistConfig, authReducer),
-      //    notes: notesReducer,
-      //    userBooks:userBooksReducer
-   },
+   reducer: rootReducer,
+
    middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
          serializableCheck: {

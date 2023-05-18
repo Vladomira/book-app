@@ -13,6 +13,8 @@ import { RequireAuth } from "./hoc/RequireAuth";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "./redux/store";
 import { authOperations } from "./redux/auth";
+import { MyBooks } from "./pages/MyBooks";
+import { MyPage } from "./pages/MyPage";
 
 function App() {
    const dispatch = useDispatch<AppDispatch>();
@@ -23,7 +25,7 @@ function App() {
          dispatch(authOperations.getCurrentUser());
       }
    }, [dispatch, token]);
-   // dispatch, token
+
    return (
       <Routes>
          <Route path="/" element={<Layout />}>
@@ -35,15 +37,31 @@ function App() {
             <Route path="authors/:id" element={<SinglePage page="author" />} />
 
             <Route path="auth" element={<AuthPage />} />
-            {/* user/id/bookId/notes */}
             <Route
-               path="user/:userId/book/:id/notes"
+               path="user/:userId"
+               element={
+                  <RequireAuth>
+                     <MyPage />
+                  </RequireAuth>
+               }
+            />
+            <Route
+               path="user/:userId/my-books"
                element={
                   <RequireAuth>
                      <NotesPage />
                   </RequireAuth>
                }
             />
+            <Route
+               path="user/:userId/my-notes"
+               element={
+                  <RequireAuth>
+                     <MyBooks />
+                  </RequireAuth>
+               }
+            />
+
             <Route path="*" element={<NotfoundPage />} />
          </Route>
       </Routes>

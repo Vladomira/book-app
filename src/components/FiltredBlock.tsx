@@ -1,5 +1,4 @@
 import { FC, SyntheticEvent } from "react";
-import { BooksType } from "../types/book";
 
 type FiltredType = {
    setSearchParams: (prop: { book: string }) => void;
@@ -13,19 +12,25 @@ export const FiltredBlock: FC<FiltredType> = ({
    setQuery,
 }) => {
    const handleSubmit = (event: SyntheticEvent) => {
+      console.log("event", event.currentTarget);
+
       event.preventDefault();
       setSearchParams({ book: query });
    };
    return (
       <>
-         <form autoComplete="off" onSubmit={handleSubmit}>
+         <form
+            autoComplete="off"
+            onSubmit={handleSubmit}
+            style={{ marginBottom: "30px" }}
+         >
             <input
                type="search"
                name="search"
                value={query}
                onChange={({ target: { value } }) => setQuery(value)}
             />
-            {/* <input type="submit" value={"Search"} /> */}
+            <button type="submit">Search</button>
          </form>
       </>
    );
