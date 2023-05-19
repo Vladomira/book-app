@@ -18,8 +18,11 @@ export const Layout = () => {
             <CustomLink to="/books">Books</CustomLink>
             <CustomLink to="/authors">Authors</CustomLink>
             {/* bar with logout and delete user + my notes list and my books lsit */}
-            <CustomLink to={`user/${user.id}`}>My page</CustomLink>
-            {!user.id && <CustomLink to="/auth">Signin</CustomLink>}
+            {!user.id ? (
+               <CustomLink to="/auth">Signin</CustomLink>
+            ) : (
+               <CustomLink to={`user/${user.id}`}>My page</CustomLink>
+            )}
 
             {user.name && (
                <div

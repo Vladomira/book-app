@@ -9,6 +9,7 @@ export type BooksType = {
       title: string;
       averageRating: number;
    };
+   dbId?: number;
 };
 export const initialBook = {
    id: "",
@@ -37,11 +38,17 @@ export type AddBookProps = {
    book: AddBookBody;
    bookId: string;
 };
+type Favorite = { favorite: boolean };
+type Finished = { finished: boolean };
+type InProgress = { inProgress: boolean };
+export type PossibleStatus = Favorite | Finished | InProgress;
 
-export type BookWithId = AddBookBody & {
-   bookId: string | null;
-   id: number;
-};
+export type StatusOperation = Favorite & Finished & InProgress;
+export type BookWithId = AddBookBody &
+   StatusOperation & {
+      bookId: string | null;
+      id: number;
+   };
 
 export const initBook: BookWithId = {
    bookId: null,
@@ -56,9 +63,6 @@ export const initBook: BookWithId = {
 export type InitBookState = BookWithId[];
 export const booksInitState: InitBookState = [initBook];
 
-// export type BookData = BookWithId & {
-//    createdAt: string;
-//    image: string;
-//    updatedAt: string;
-//    userId: string;
-// };
+export type BookStatusProps = {
+   [key: string]: boolean;
+};

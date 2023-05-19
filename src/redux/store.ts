@@ -13,6 +13,7 @@ import storage from "redux-persist/lib/storage";
 import { Persistor } from "redux-persist";
 import authReducer from "./auth/authSlice";
 import userBooksReducer from "./user-books/userBooksSlice";
+import notesReducer from "./user-notes/userNotesSlice";
 import { AuthState } from "../types/auth";
 
 const authPersistConfig = {
@@ -24,6 +25,7 @@ const authPersistConfig = {
 const rootReducer = combineReducers({
    auth: persistReducer<AuthState>(authPersistConfig, authReducer),
    books: userBooksReducer,
+   notes: notesReducer,
 });
 const store = configureStore({
    reducer: rootReducer,

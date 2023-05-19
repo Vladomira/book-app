@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { AuthForm } from "../components/views/Form";
+import { AuthForm } from "../components/views/AuthForm";
 import { SwitchForm } from "../types/form";
 
 export const AuthPage = () => {

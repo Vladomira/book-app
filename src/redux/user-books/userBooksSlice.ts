@@ -13,10 +13,18 @@ export const userBooksSlice = createSlice({
          })
          .addCase(
             booksOperations.getBooks.fulfilled,
-            (state, { payload }) => payload
+            (_, { payload }) => payload
          )
          .addCase(booksOperations.deleteBook.fulfilled, (state, { payload }) =>
             state.filter((book) => book.id !== payload)
+         )
+         .addCase(
+            booksOperations.changeBookStatus.fulfilled,
+            (state, { payload }) => {
+               return state.map((book) =>
+                  book.id === payload.id ? payload : book
+               );
+            }
          );
    },
 });

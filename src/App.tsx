@@ -49,7 +49,7 @@ function App() {
                path="user/:userId/my-books"
                element={
                   <RequireAuth>
-                     <NotesPage />
+                     <MyBooks />
                   </RequireAuth>
                }
             />
@@ -57,7 +57,7 @@ function App() {
                path="user/:userId/my-notes"
                element={
                   <RequireAuth>
-                     <MyBooks />
+                     <NotesPage />
                   </RequireAuth>
                }
             />

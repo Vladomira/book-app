@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { AddBookProps } from "../../types/book";
+import { AddBookProps, PossibleStatus } from "../../types/book";
 import { UserState } from "../../types/auth";
 
 axios.defaults.baseURL = "http://localhost:8080/api/";
@@ -57,9 +57,37 @@ const deleteBook = createAsyncThunk(
    }
 );
 
+type ChangeStatusProp = { credentials: PossibleStatus; bookId: number };
+
+export const changeBookStatus = createAsyncThunk(
+   "book/change-status",
+   async (
+      { credentials, bookId }: ChangeStatusProp,
+
+      thunkAPI
+   ) => {
+      const state = thunkAPI.getState() as UserState;
+      const persistedToken = state.auth.token;
+      if (!persistedToken) {
+         return thunkAPI.rejectWithValue({ message: "Please authorize" });
+      }
+      try {
+         const { data } = await axios.patch(
+            `user-book/${bookId}/status`,
+            credentials
+         );
+
+         return data;
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(error);
+      }
+   }
+);
+
 const booksOperations = {
    addBook,
    getBooks,
    deleteBook,
+   changeBookStatus,
 };
 export default booksOperations;

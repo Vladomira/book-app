@@ -10,7 +10,7 @@ export const RequireAuth = ({ children }: PropsWithChildren) => {
       if (!userId) {
          return <Navigate to="/auth" state={{ from: location }} />;
       }
-   }, 0.2);
+   }, 1);
 
    return <>{children}</>;
 };

@@ -9,8 +9,8 @@ export const fetchBooks = async (
 ) => {
    const reqQuery = query.split(" ").join("+") || "hardcover+fiction";
    const res = await fetch(
-      `${url}q=${reqQuery}&maxResults=${limit}&startIndex=${offset}${configUrl}&key=${ApiKey}
-      `
+      `${url}q=${reqQuery}&maxResults=${limit}&startIndex=${offset}${configUrl}`
+      // &key=${ApiKey}
    );
 
    return await res.json();
