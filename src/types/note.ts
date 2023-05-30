@@ -12,3 +12,12 @@ export const noteInit: NoteProps = {
    id: null,
 };
 export const NoteReducerState = [noteInit];
+export type ReceivedNote = {
+   bookId: number;
+   chapter: string;
+   createdAt: string;
+   id: number;
+   text: string;
+   updatedAt: string;
+   userId: string;
+};

@@ -10,17 +10,14 @@ export const fetchBooks = async (
    const reqQuery = query.split(" ").join("+") || "hardcover+fiction";
    const res = await fetch(
       `${url}q=${reqQuery}&maxResults=${limit}&startIndex=${offset}${configUrl}`
-      // &key=${ApiKey}
    );
 
    return await res.json();
 };
-// https://www.googleapis.com/books/v1/volumes?q=flowers&filter=free-ebooks&key=yourAPIKey
 
 export const fetchById = async (id: string | undefined) => {
    const res = await fetch(
-      `https://www.googleapis.com/books/v1/volumes/${id}
-      `
+      `https://www.googleapis.com/books/v1/volumes/${id}  `
    );
 
    return await res.json();

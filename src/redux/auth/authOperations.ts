@@ -2,7 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { UserState, FormData } from "../../types/auth";
 
-axios.defaults.baseURL = "http://localhost:8080/api/";
+// axios.defaults.baseURL = "http://localhost:8080/api/";
+axios.defaults.baseURL = "https://book-app-copy.herokuapp.com/api/";
 
 const token = {
    set(token: string) {

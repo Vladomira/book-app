@@ -36,7 +36,6 @@ const getNotes = createAsyncThunk("notes/get", async (id: string, thunkAPI) => {
 
    try {
       const { data } = await axios.get(`/notes/${id}`);
-      console.log("data", data);
 
       return data;
    } catch (error: any) {
@@ -44,5 +43,72 @@ const getNotes = createAsyncThunk("notes/get", async (id: string, thunkAPI) => {
    }
 });
 
-const notesOperations = { createNote, getNotes };
+const getNotesByBookId = createAsyncThunk(
+   "notes/getForBook",
+   async (bookId: number, thunkAPI) => {
+      const state = thunkAPI.getState() as UserState;
+
+      const persistedToken = state.auth.token;
+      if (!persistedToken) {
+         return thunkAPI.rejectWithValue({ message: "Please authorize" });
+      }
+
+      try {
+         const { data } = await axios.get(`/notes/book-notes/${bookId}`);
+
+         return data;
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(error);
+      }
+   }
+);
+
+const updateNoteById = createAsyncThunk(
+   "notes/update",
+   async (credentials: NoteProps, thunkAPI) => {
+      const state = thunkAPI.getState() as UserState;
+
+      const persistedToken = state.auth.token;
+      if (!persistedToken) {
+         return thunkAPI.rejectWithValue({ message: "Please authorize" });
+      }
+      try {
+         const { id, text, chapter } = credentials;
+         const { data } = await axios.patch(`/notes/${id}`, {
+            text,
+            chapter,
+         });
+
+         return data;
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(error);
+      }
+   }
+);
+const deleteNoteById = createAsyncThunk(
+   "notes/delete",
+   async (noteId: number | null, thunkAPI) => {
+      const state = thunkAPI.getState() as UserState;
+
+      const persistedToken = state.auth.token;
+      if (!persistedToken) {
+         return thunkAPI.rejectWithValue({ message: "Please authorize" });
+      }
+      try {
+         const { data } = await axios.delete(`/notes/${noteId}`);
+
+         return data;
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(error);
+      }
+   }
+);
+
+const notesOperations = {
+   createNote,
+   getNotes,
+   getNotesByBookId,
+   deleteNoteById,
+   updateNoteById,
+};
 export default notesOperations;

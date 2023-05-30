@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Stack, Box } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
-import { FiltredBlock } from "../components/FiltredBlock";
+import { FiltredBlock } from "../components/Filter";
 import { BooksType, initialBook } from "../types/book";
-import { BookItem } from "../components/BookItem";
 import { fetchBooks } from "../api/books";
+import { BooksList } from "../components/Books/BooksList";
 
-export const BooksPage = () => {
+export const BooksPage: FC = () => {
    const [data, setData] = useState<BooksType[]>([initialBook]);
    const [countPage, setCountPage] = useState<number>(1);
    const [pageNumber, setPageNumber] = useState<number>(1);
    const [query, setQuery] = useState("");
    const [searchParams, setSearchParams] = useSearchParams();
-   const limit = 10;
+   const limit = 14;
    const bookQuery = searchParams.get("book") || "";
 
    useEffect(() => {
@@ -38,6 +38,8 @@ export const BooksPage = () => {
          })
          .catch(console.error);
    };
+   // const reqQuery = query.split(" ").join("+");
+
    return (
       <>
          <FiltredBlock
@@ -45,22 +47,8 @@ export const BooksPage = () => {
             setQuery={setQuery}
             setSearchParams={setSearchParams}
          />
-         <ul
-            style={{
-               display: "flex",
-               flexWrap: "wrap",
-               justifyContent: "center",
-               marginLeft: "-30px",
-               marginTop: "-30px",
-               marginBottom: "50px",
-            }}
-         >
-            {data.length > 0 &&
-               data
-                  .filter((book) => book.volumeInfo.title.includes(bookQuery))
+         <BooksList books={data} bookQuery={bookQuery} />
 
-                  .map((el) => <BookItem key={el.id} el={el} />)}
-         </ul>
          {data.length > 0 && (
             <Box display="flex" justifyContent="center">
                <Stack spacing={2}>

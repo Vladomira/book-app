@@ -17,6 +17,19 @@ export const userNotesSlice = createSlice({
          .addCase(
             notesOperations.getNotes.fulfilled,
             (_, { payload }) => payload
+         )
+         .addCase(
+            notesOperations.getNotesByBookId.fulfilled,
+            (_, { payload }) => payload
+         )
+         .addCase(
+            notesOperations.updateNoteById.fulfilled,
+            (state, { payload }) =>
+               state.map((note) => (note.id === payload.id ? payload : note))
+         )
+         .addCase(
+            notesOperations.deleteNoteById.fulfilled,
+            (state, { payload }) => state.filter((el) => el.id !== payload)
          );
    },
 });

@@ -1,34 +1,40 @@
 import { FC, SyntheticEvent } from "react";
+import { TextField } from "@mui/material";
+import SearchIcon from "@material-ui/icons/Search";
+import { FiltredType } from "../../types/filter";
+import { useStylesFilter } from "./Filter.style";
 
-type FiltredType = {
-   setSearchParams: (prop: { book: string }) => void;
-   query: string;
-   setQuery: (prop: string) => void;
-};
-// for books & authors
 export const FiltredBlock: FC<FiltredType> = ({
    query,
    setSearchParams,
    setQuery,
 }) => {
+   const classes = useStylesFilter();
+
    const handleSubmit = (event: SyntheticEvent) => {
       event.preventDefault();
-      setSearchParams({ book: query });
+      return setSearchParams({ book: query });
    };
+
    return (
       <>
          <form
             autoComplete="off"
             onSubmit={handleSubmit}
-            style={{ marginBottom: "30px" }}
+            className={classes.form}
          >
-            <input
+            <TextField
                type="search"
+               variant="outlined"
+               placeholder="Search"
                name="search"
                value={query}
+               InputProps={{
+                  endAdornment: <SearchIcon />,
+               }}
                onChange={({ target: { value } }) => setQuery(value)}
+               className={classes.input}
             />
-            <button type="submit">Search</button>
          </form>
       </>
    );

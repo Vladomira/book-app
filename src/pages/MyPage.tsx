@@ -50,7 +50,7 @@ export const MyPage = () => {
                >
                   {userBooks.map((el) => (
                      <li
-                        key={el.bookId}
+                        key={el.id}
                         style={{
                            display: "flex",
                            flexDirection: "column",

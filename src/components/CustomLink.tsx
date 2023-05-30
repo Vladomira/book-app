@@ -1,7 +1,6 @@
 import { useMatch, Link } from "react-router-dom";
 import { PropsWithChildren } from "react";
-
-// import { Link } from "@mui/material";
+import { useStylesNavBar } from "./NavBar/NavBar.style";
 
 type CustomLinkProps = {
    to: string;
@@ -11,10 +10,12 @@ export const CustomLink = ({
    to,
 }: PropsWithChildren<CustomLinkProps>) => {
    const match = useMatch(to);
+   const classes = useStylesNavBar();
+
+   const linkColor = `${match ? "#FFA500" : "#FFFAFA"}`;
 
    return (
-      // Link на матеріал не міняти!!
-      <Link to={to} color={match ? "rgb(255,127,80)" : "#FFFAFA"}>
+      <Link to={to} style={{ color: linkColor }} className={classes.navLink}>
          {children}
       </Link>
    );

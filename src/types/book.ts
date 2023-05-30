@@ -8,6 +8,7 @@ export type BooksType = {
       categories: string[];
       title: string;
       averageRating: number;
+      description: string;
    };
    dbId?: number;
 };
@@ -21,7 +22,13 @@ export const initialBook = {
       categories: [""],
       title: "",
       averageRating: 0,
+      description: "",
    },
+};
+
+export type BooksListPros = {
+   books: BooksType[];
+   bookQuery: string;
 };
 
 // books-operations

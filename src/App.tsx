@@ -8,13 +8,14 @@ import { NotesPage } from "./pages/NotesPage";
 import { NotfoundPage } from "./pages/NotfoundPage";
 import { AuthPage } from "./pages/AuthPage";
 
-import { Layout } from "./components/Layout";
+import { NaBar } from "./components/NaBar";
 import { RequireAuth } from "./hoc/RequireAuth";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "./redux/store";
 import { authOperations } from "./redux/auth";
 import { MyBooks } from "./pages/MyBooks";
 import { MyPage } from "./pages/MyPage";
+import "./App.css";
 
 function App() {
    const dispatch = useDispatch<AppDispatch>();
@@ -28,12 +29,12 @@ function App() {
 
    return (
       <Routes>
-         <Route path="/" element={<Layout />}>
+         <Route path="/" element={<NaBar />}>
             <Route index path="/" element={<HomePage />} />
             <Route path="books" element={<BooksPage />} />
             <Route path="books/:id" element={<SinglePage page="book" />} />
 
-            <Route path="authors" element={<AuthorsPage />} />
+            {/* <Route path="authors" element={<AuthorsPage />} /> */}
             <Route path="authors/:id" element={<SinglePage page="author" />} />
 
             <Route path="auth" element={<AuthPage />} />
