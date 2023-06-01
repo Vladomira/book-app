@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { useStylesBooks } from "./Books.style";
 import { Typography } from "@mui/material";
 
@@ -11,7 +11,6 @@ export const BookInfoBox: FC<BookInfoBoxProps> = ({ title, categories }) => {
    const booksCategories = categories?.map((el, idx) =>
       idx !== categories.length - 1 ? `${el},` : `${el}`
    );
-   console.log(title.length);
 
    return (
       <div className={classes.bookInfoBox}>

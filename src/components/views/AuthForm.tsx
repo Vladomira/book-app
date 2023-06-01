@@ -7,6 +7,8 @@ import { FormData } from "../../types/auth";
 import { SwitchForm } from "../../types/form";
 import { AppDispatch } from "../../redux/store";
 import { authOperations } from "../../redux/auth";
+import { useStylesAuth } from "../Auth/Auth.style";
+import { useNavigate } from "react-router-dom";
 
 type FormProps = {
    switcher: SwitchForm;
@@ -20,6 +22,8 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
       formState: { errors },
    } = useForm<FormData>();
    const dispatch = useDispatch<AppDispatch>();
+   const classes = useStylesAuth();
+   const navigate = useNavigate();
 
    const onSubmit = (data: FormData) => {
       const { name, email, password } = data;
@@ -33,9 +37,10 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
             break;
       }
       reset();
+      navigate("/books");
    };
    return (
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
          {switcher === "Signup" && (
             <TextField
                {...register("name", { required: "Name is required" })}
@@ -43,6 +48,7 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
                error={!!errors.name}
                helperText={errors.name?.message}
                autoComplete="off"
+               className={classes.input}
             />
          )}
 
@@ -58,6 +64,7 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
             error={!!errors.email}
             helperText={errors.email?.message}
             autoComplete="off"
+            className={classes.input}
          />
 
          <TextField
@@ -73,9 +80,14 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
             error={!!errors.password}
             helperText={errors.password?.message}
             autoComplete="off"
+            className={classes.input}
          />
 
-         <Button type="submit" variant="contained" color="primary">
+         <Button
+            type="submit"
+            variant="contained"
+            className={classes.submitButton}
+         >
             {switcher === "Signup" ? "Signup" : "Login"}
          </Button>
       </form>

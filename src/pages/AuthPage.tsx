@@ -1,52 +1,29 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { AuthForm } from "../components/views/AuthForm";
 import { SwitchForm } from "../types/form";
+import { AuthSwitcherComponent } from "../components/Auth/AuthSwitcher";
+import { useStylesAuth } from "../components/Auth/Auth.style";
 
 export const AuthPage = () => {
-   const navigate = useNavigate();
-   const location = useLocation();
    const [switchForm, setSwitchForm] = useState<SwitchForm>("Signup");
-   // const fromPage = location.state?.from?.pathname || "/";
+   const classes = useStylesAuth();
 
    return (
-      <div>
-         <h1>{switchForm}</h1>
+      <div className={classes.formBox}>
+         <h1 className={classes.title}>{switchForm}</h1>
          <AuthForm switcher={switchForm} />
          {switchForm === "Signup" ? (
-            <div>
-               <p>
-                  I have account.{" "}
-                  <button
-                     type="button"
-                     onClick={() => setSwitchForm("Login")}
-                     style={{
-                        background: "transparent",
-                        border: "none",
-                        cursor: "pointer",
-                     }}
-                  >
-                     Login
-                  </button>
-               </p>
-            </div>
+            <AuthSwitcherComponent
+               setSwitchForm={setSwitchForm}
+               isAccount={"I have account."}
+               authButtonText={"Login"}
+            />
          ) : (
-            <div>
-               <p>
-                  I don't have account.
-                  <button
-                     type="button"
-                     onClick={() => setSwitchForm("Signup")}
-                     style={{
-                        background: "transparent",
-                        border: "none",
-                        cursor: "pointer",
-                     }}
-                  >
-                     Signup
-                  </button>
-               </p>
-            </div>
+            <AuthSwitcherComponent
+               setSwitchForm={setSwitchForm}
+               isAccount={" I don't have account."}
+               authButtonText={"Signup"}
+            />
          )}
       </div>
    );

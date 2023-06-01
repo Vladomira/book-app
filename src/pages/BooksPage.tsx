@@ -1,11 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Stack, Box } from "@mui/material";
-import Pagination from "@mui/material/Pagination";
 import { FiltredBlock } from "../components/Filter";
 import { BooksType, initialBook } from "../types/book";
 import { fetchBooks } from "../api/books";
 import { BooksList } from "../components/Books/BooksList";
+import { PaginationComponent } from "../components/Pagination";
 
 export const BooksPage: FC = () => {
    const [data, setData] = useState<BooksType[]>([initialBook]);
@@ -21,7 +20,8 @@ export const BooksPage: FC = () => {
       fetchBooks(query, limit, offset)
          .then((data) => {
             const count = Math.floor(data.totalItems / limit);
-            setCountPage(count);
+
+            setCountPage(count - 11);
             setData([...data.items]);
          })
          .catch(console.error);
@@ -38,7 +38,6 @@ export const BooksPage: FC = () => {
          })
          .catch(console.error);
    };
-   // const reqQuery = query.split(" ").join("+");
 
    return (
       <>
@@ -50,15 +49,11 @@ export const BooksPage: FC = () => {
          <BooksList books={data} bookQuery={bookQuery} />
 
          {data.length > 0 && (
-            <Box display="flex" justifyContent="center">
-               <Stack spacing={2}>
-                  <Pagination
-                     count={countPage}
-                     page={pageNumber}
-                     onChange={handleChange}
-                  />
-               </Stack>
-            </Box>
+            <PaginationComponent
+               count={countPage}
+               page={pageNumber}
+               onChange={handleChange}
+            />
          )}
       </>
    );

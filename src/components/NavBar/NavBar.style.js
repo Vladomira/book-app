@@ -1,14 +1,15 @@
 import { makeStyles } from "@material-ui/core";
 
 export const useStylesNavBar = makeStyles(() => ({
+   header: {
+      // backgroundColor: "#003333 !important",
+      backgroundColor: "#004C4C !important",
+      // 006B6B
+   },
    container: {
       padding: "100px 30px 30px",
-      // backgroundColor: "#003366",
-   },
-   header: {
-      backgroundColor: "#333333 !important",
-      // #003366 #333333 #36454F
-      // modern:#008080
+      // backgroundColor: "#004C4C",
+      // backgroundColor: "#008080",
    },
 
    navBar: {

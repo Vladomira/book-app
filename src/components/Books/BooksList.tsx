@@ -16,6 +16,3 @@ export const BooksList: FC<BooksListPros> = ({ books, bookQuery }) => {
       </List>
    );
 };
-// <ListItem component="li">
-//    <ListItemText primary="Item 1" />
-// </ListItem>

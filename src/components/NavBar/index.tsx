@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { AppBar, Toolbar } from "@mui/material";
 import { CssBaseline } from "@material-ui/core";
-import { useStylesNavBar } from "./NavBar/NavBar.style";
-import { NavList } from "./NavBar/NavList";
-import { NavUser } from "./NavBar/NavUser";
+import { useStylesNavBar } from "./NavBar.style";
+import { NavList } from "./NavList";
+import { NavUser } from "./NavUser";
 
 export const NaBar = () => {
    const classes = useStylesNavBar();

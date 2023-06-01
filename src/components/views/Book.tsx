@@ -126,6 +126,5 @@ export const Book: FC<SinglePageProps> = ({ id }) => {
 //    // .then((res) => res.json())
 //    .then(({ body }) => {
 //       // const formats = data.docs[0]?.formats;
-//       // console.log("Available formats:", formats);
-//       console.log("щзутдши", body);
+//
 //    });

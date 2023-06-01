@@ -53,7 +53,7 @@ export const BookItem = ({ el }: BookItemProps) => {
             className={classes.addToMy}
             variant="outlined"
          >
-            Add
+            Add to my
          </Button>
       </ListItem>
    );
