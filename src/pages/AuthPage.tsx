@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { AuthForm } from "../components/views/AuthForm";
+import { AuthForm } from "../components/AuthForm";
 import { SwitchForm } from "../types/form";
-import { AuthSwitcherComponent } from "../components/Auth/AuthSwitcher";
-import { useStylesAuth } from "../components/Auth/Auth.style";
+import { AuthSwitcherComponent } from "../components/AuthForm/AuthSwitcher";
+import { useStylesAuth } from "../components/AuthForm/Auth.style";
 
 export const AuthPage = () => {
    const [switchForm, setSwitchForm] = useState<SwitchForm>("Signup");

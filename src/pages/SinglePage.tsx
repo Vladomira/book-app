@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { Book } from "../components/views/Book";
-import { Author } from "../components/views/Author";
+import { BookInfo } from "../components/BookInfo";
+// import { Author } from "../components/views/Author";
 
 type SinglePageProps = { page: "book" | "author" };
 
@@ -18,7 +18,7 @@ export const SinglePage = ({ page }: PropsWithChildren<SinglePageProps>) => {
          <button type="button">
             <Link to="/">Home</Link>
          </button>
-         {page === "book" ? <Book id={id} /> : <Author id={id} />}
+         {/* {page === "book" ? <BookInfo id={id} /> : <Author id={id} />} */}
       </div>
    );
 };

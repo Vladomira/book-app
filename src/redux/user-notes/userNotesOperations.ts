@@ -4,7 +4,8 @@ import axios from "axios";
 import { UserState } from "../../types/auth";
 import { NoteProps } from "../../types/note";
 
-axios.defaults.baseURL = "http://localhost:8080/api";
+// axios.defaults.baseURL = "http://localhost:8080/api";
+axios.defaults.baseURL = process.env.REACT_APP_DB_URL;
 
 const createNote = createAsyncThunk(
    "notes/create",

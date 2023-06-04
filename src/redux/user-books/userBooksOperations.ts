@@ -3,7 +3,8 @@ import axios from "axios";
 import { AddBookProps, PossibleStatus } from "../../types/book";
 import { UserState } from "../../types/auth";
 
-axios.defaults.baseURL = "http://localhost:8080/api/";
+// axios.defaults.baseURL = "http://localhost:8080/api/";
+axios.defaults.baseURL = process.env.REACT_APP_DB_URL;
 
 const addBook = createAsyncThunk(
    "book/add",

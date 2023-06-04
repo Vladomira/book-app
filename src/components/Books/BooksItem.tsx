@@ -3,18 +3,19 @@ import { BooksType } from "../../types/book";
 import { AppDispatch } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { booksOperations } from "../../redux/user-books";
-import { Button, ListItem, Typography } from "@mui/material";
+import { Button, ListItem } from "@mui/material";
 import { useStylesBooks } from "./Books.style";
-import { BookInfoBox } from "./BookInfoBox";
+import { BookInfoBox } from "./BooksInfoBox";
+import { useStylesBookItem } from "../UnitedStyles/BookItem.style";
 
 type BookItemProps = {
    el: BooksType;
 };
 
 export const BookItem = ({ el }: BookItemProps) => {
-   const date = new Date(el.volumeInfo.publishedDate);
    const dispatch = useDispatch<AppDispatch>();
    const classes = useStylesBooks();
+   const bookClasses = useStylesBookItem();
 
    const getImage =
       el.volumeInfo.imageLinks?.smallThumbnail ||
@@ -43,14 +44,14 @@ export const BookItem = ({ el }: BookItemProps) => {
 
    return (
       <ListItem className={classes.listItem}>
-         <Link to={`/books/${el.id}`} className={classes.link}>
+         <Link to={`/${el.id}`} className={classes.link}>
             <img className={classes.bookImg} src={getImage} alt="" />
             <BookInfoBox title={title} categories={categories} />
          </Link>
          <Button
             type="button"
             onClick={() => addBook()}
-            className={classes.addToMy}
+            className={bookClasses.bookButton}
             variant="outlined"
          >
             Add to my
@@ -58,6 +59,3 @@ export const BookItem = ({ el }: BookItemProps) => {
       </ListItem>
    );
 };
-// {!Number.isNaN(date.getFullYear()) && (
-//    <p>{date.getFullYear()}</p>
-// )}

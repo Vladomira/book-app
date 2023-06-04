@@ -3,7 +3,8 @@ import axios from "axios";
 import { UserState, FormData } from "../../types/auth";
 
 // axios.defaults.baseURL = "http://localhost:8080/api/";
-axios.defaults.baseURL = "https://book-app-copy.herokuapp.com/api/";
+
+axios.defaults.baseURL = process.env.REACT_APP_DB_URL;
 
 const token = {
    set(token: string) {

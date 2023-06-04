@@ -12,7 +12,7 @@ import { notesOperations } from "../../redux/user-notes";
 import { NoteItem } from "../notes/NoteItem";
 import { ReceivedNote } from "../../types/note";
 
-export const Book: FC<SinglePageProps> = ({ id }) => {
+export const BookInfo: FC<SinglePageProps> = ({ id }) => {
    const [data, setData] = useState<BooksType>(initialBook);
    const [isOpen, setIsOpen] = useState(false);
    const [dbBookId, setDbBookId] = useState<number | null>(null);
@@ -123,8 +123,3 @@ export const Book: FC<SinglePageProps> = ({ id }) => {
 // https://openlibrary.org/isbn/0521898587.json
 // http://openlibrary.org/api/books?bibkeys=ISBN:0201558025,LCCN:93005405
 // fetch("https://openlibrary.org/isbn/0521898587.json?jscmd=viewapi")
-//    // .then((res) => res.json())
-//    .then(({ body }) => {
-//       // const formats = data.docs[0]?.formats;
-//
-//    });

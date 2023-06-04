@@ -9,8 +9,7 @@ export const NavList = () => {
 
    return (
       <div className={classes.navList}>
-         {/* <CustomLink to="/">Home</CustomLink> */}
-         <CustomLink to="/books">Books</CustomLink>
+         <CustomLink to="/">Books</CustomLink>
 
          {!user.id ? (
             <CustomLink to="/auth">Signin</CustomLink>

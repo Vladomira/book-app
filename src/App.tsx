@@ -28,9 +28,8 @@ function App() {
    return (
       <Routes>
          <Route path="/" element={<NaBar />}>
-            {/* <Route index path="/" element={<HomePage />} /> */}
-            <Route path="books" element={<BooksPage />} />
-            <Route path="books/:id" element={<BookPage />} />
+            <Route index path="/" element={<BooksPage />} />
+            <Route path=":id" element={<BookPage />} />
 
             <Route path="auth" element={<AuthPage />} />
             <Route

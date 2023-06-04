@@ -2,7 +2,7 @@ import { FC } from "react";
 import List from "@material-ui/core/List";
 
 import { BooksListPros } from "../../types/book";
-import { BookItem } from "./BookItem";
+import { BookItem } from "./BooksItem";
 import { useStylesBooks } from "./Books.style";
 
 export const BooksList: FC<BooksListPros> = ({ books, bookQuery }) => {

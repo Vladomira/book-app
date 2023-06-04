@@ -7,8 +7,9 @@ import { FormData } from "../../types/auth";
 import { SwitchForm } from "../../types/form";
 import { AppDispatch } from "../../redux/store";
 import { authOperations } from "../../redux/auth";
-import { useStylesAuth } from "../Auth/Auth.style";
+import { useStylesAuth } from "./Auth.style";
 import { useNavigate } from "react-router-dom";
+import { useStylesButtons } from "../Buttons.style";
 
 type FormProps = {
    switcher: SwitchForm;
@@ -23,6 +24,7 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
    } = useForm<FormData>();
    const dispatch = useDispatch<AppDispatch>();
    const classes = useStylesAuth();
+   const btnClass = useStylesButtons();
    const navigate = useNavigate();
 
    const onSubmit = (data: FormData) => {
@@ -37,7 +39,7 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
             break;
       }
       reset();
-      navigate("/books");
+      navigate("/");
    };
    return (
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
