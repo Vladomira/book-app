@@ -5,7 +5,7 @@ import { AppDispatch } from "../../redux/store";
 import { ReceivedNote } from "../../types/note";
 import { notesOperations } from "../../redux/user-notes";
 import { ModalWrapper } from "../Modal";
-import { NoteForm } from "../NoteForm";
+import { NoteForm } from "../NoteForm/NoteForm";
 
 type noteItemProps = {
    note: ReceivedNote;
@@ -59,7 +59,7 @@ export const NoteItem: FC<noteItemProps> = ({ note, bookId }) => {
          </div>
 
          {isOpen && (
-            <ModalWrapper setIsOpen={setIsOpen}>
+            <ModalWrapper setIsOpen={setIsOpen} isOpen={isOpen}>
                <NoteForm id={bookId} setIsOpen={setIsOpen} currentNote={note} />
             </ModalWrapper>
          )}

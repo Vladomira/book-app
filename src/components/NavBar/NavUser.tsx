@@ -5,10 +5,12 @@ import { AppDispatch, RootState } from "../../redux/store";
 import { useAppSelector } from "../../redux/hooks";
 import { useStylesNavBar } from "./NavBar.style";
 import { authOperations } from "../../redux/auth";
+import { useNavigate } from "react-router-dom";
 
 export const NavUser = () => {
    const user = useAppSelector((state: RootState) => state.auth.user);
    const dispatch = useDispatch<AppDispatch>();
+   const navigate = useNavigate();
    const classes = useStylesNavBar();
    return (
       <>
@@ -20,9 +22,10 @@ export const NavUser = () => {
                <button
                   className={classes.logoutButton}
                   type="button"
-                  onClick={() =>
-                     dispatch(authOperations.logout({ id: user.id }))
-                  }
+                  onClick={() => {
+                     dispatch(authOperations.logout({ id: user.id }));
+                     navigate("/");
+                  }}
                >
                   <ExitToAppIcon className={classes.logoutIcon} />
                </button>

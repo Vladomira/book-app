@@ -24,7 +24,7 @@ export const useStylesBooks = makeStyles(() => ({
       borderRadius: 10,
       overflow: "hidden",
       backgroundColor: "#FAEBE2",
-      boxShadow: "5px 3px 5px 1px rgba(0,0,0,0.34)",
+      boxShadow: "5px 3px 5px 1px rgba(0,0,0,0.56)",
    },
 
    bookImg: {

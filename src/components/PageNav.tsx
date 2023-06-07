@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
-import { useStylesButtons } from "./Buttons.style";
+import { useStylesButtons } from "./CommonStyles/Buttons.style";
 import { useStylesBook } from "./BookInfo/Book.style";
 
 export const PageNav: FC = () => {
@@ -22,7 +22,7 @@ export const PageNav: FC = () => {
          <div style={{ marginLeft: "20px" }}>
             <Button
                type="button"
-               className={btnClasses.orangeVariant}
+               className={btnClasses.greenVariant}
                onClick={() => navigate("/")}
             >
                Home

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Typography } from "@mui/material";
-import { useStylesBookItem } from "../UnitedStyles/BookItem.style";
+import { useStylesBookItem } from "../CommonStyles/BookItem.style";
 
 type BookInfoBoxProps = {
    title: string;

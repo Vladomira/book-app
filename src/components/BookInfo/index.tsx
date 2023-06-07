@@ -3,7 +3,7 @@ import { SinglePageProps } from "../../types";
 import { BooksType, initialBook } from "../../types/book";
 import { fetchById } from "../../api/books";
 import { ModalWrapper } from "../Modal";
-import { NoteForm } from "../NoteForm";
+import { NoteForm } from "../NoteForm/NoteForm";
 import { useAppSelector } from "../../redux/hooks";
 import { AppDispatch, RootState } from "../../redux/store";
 import { useDispatch } from "react-redux";
@@ -11,6 +11,7 @@ import { booksOperations } from "../../redux/user-books";
 import { notesOperations } from "../../redux/user-notes";
 import { NoteItem } from "../notes/NoteItem";
 import { ReceivedNote } from "../../types/note";
+import { MyNotesList } from "../MyNotes";
 
 export const BookInfo: FC<SinglePageProps> = ({ id }) => {
    const [data, setData] = useState<BooksType>(initialBook);
@@ -40,7 +41,6 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
                return { ...prev, pdf: pdfLink };
             });
          }
-
          setData(data);
       });
    }, []);
@@ -53,7 +53,7 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
          setDbBookId(matchingBook.id);
          dispatch(notesOperations.getNotesByBookId(matchingBook.id));
       }
-   }, [data.id, dispatch, userId]);
+   }, [dispatch, id, userId]);
 
    return (
       <div>
@@ -92,25 +92,14 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
          )}
 
          {isOpen && (
-            <ModalWrapper setIsOpen={setIsOpen}>
+            <ModalWrapper setIsOpen={setIsOpen} isOpen={isOpen}>
                <NoteForm id={dbBookId} setIsOpen={setIsOpen} />
             </ModalWrapper>
          )}
          {booksNotes[0]?.id === null ? (
             <p>No notes yet</p>
          ) : (
-            <ul
-               style={{
-                  display: "flex",
-                  flexWrap: "nowrap",
-                  marginLeft: "-30px",
-                  marginTop: "-30px",
-               }}
-            >
-               {booksNotes.map((el) => {
-                  return <NoteItem key={el.id} note={el} bookId={dbBookId} />;
-               })}
-            </ul>
+            <MyNotesList notes={booksNotes} />
          )}
       </div>
    );

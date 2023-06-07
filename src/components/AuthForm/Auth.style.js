@@ -8,7 +8,7 @@ export const useStylesAuth = makeStyles(() => ({
       justifyContent: "center",
       backgroundColor: "#FAEBE2",
       padding: "20px",
-      borderRadius: "8px",
+      borderRadius: "10px",
       maxWidth: "400px",
       margin: "0 auto",
    },
@@ -40,15 +40,6 @@ export const useStylesAuth = makeStyles(() => ({
       },
    },
 
-   submitButton: {
-      marginTop: "20px",
-      backgroundColor: "#FF802D",
-      color: "#FFFFFF",
-
-      "&:hover": {
-         backgroundColor: "rgb(255, 165, 0) !important",
-      },
-   },
    isAccountBox: { display: "flex", marginTop: "18px" },
    isAcountText: {
       color: "#800000",

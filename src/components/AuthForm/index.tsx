@@ -9,7 +9,7 @@ import { AppDispatch } from "../../redux/store";
 import { authOperations } from "../../redux/auth";
 import { useStylesAuth } from "./Auth.style";
 import { useNavigate } from "react-router-dom";
-import { useStylesButtons } from "../Buttons.style";
+import { useStylesButtons } from "../CommonStyles/Buttons.style";
 
 type FormProps = {
    switcher: SwitchForm;
@@ -88,7 +88,7 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
          <Button
             type="submit"
             variant="contained"
-            className={classes.submitButton}
+            className={btnClass.orangeVarint}
          >
             {switcher === "Signup" ? "Signup" : "Login"}
          </Button>

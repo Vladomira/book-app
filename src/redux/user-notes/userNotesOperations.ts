@@ -45,7 +45,7 @@ const getNotes = createAsyncThunk("notes/get", async (id: string, thunkAPI) => {
 });
 
 const getNotesByBookId = createAsyncThunk(
-   "notes/getForBook",
+   "notes/getByBookId",
    async (bookId: number, thunkAPI) => {
       const state = thunkAPI.getState() as UserState;
 

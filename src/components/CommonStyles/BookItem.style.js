@@ -2,7 +2,8 @@ import { makeStyles } from "@material-ui/core";
 
 export const useStylesBookItem = makeStyles(() => ({
    bookInfoBox: {
-      padding: "8px 8px 0px",
+      padding: "8px 10px 0px",
+      minHeight: "85px",
    },
    bookInfoTitle: {
       fontWeight: "600 !important",
@@ -31,5 +32,16 @@ export const useStylesBookItem = makeStyles(() => ({
          color: "white !important",
          borderBottom: "1px solid #FFA500",
       },
+
+      "&:disabled": {
+         opacity: 0.5,
+         cursor: "not-allowed",
+      },
    },
+   // btnsBox: {
+   //    display: "flex",
+   //    alignItems: "center",
+   //    justifyContent: "space-between",
+   //    padding: "0px 8px",
+   // },
 }));

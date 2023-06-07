@@ -3,6 +3,14 @@ import { makeStyles } from "@material-ui/core";
 export const useStylesCarousel = makeStyles(() => ({
    slider: {
       padding: "0px 12px",
+
+      "& >.slick-list>.slick-track": {
+         marginLeft: "0px",
+      },
+      "& >.slick-list": {
+         overflowX: "clip",
+         overflowY: "inherit",
+      },
       "& .slick-slide": {
          width: "180px !important",
          "&:not(:last-child)": {
@@ -32,13 +40,12 @@ export const useStylesCarousel = makeStyles(() => ({
       display: "flex !important",
       flexDirection: "column",
       justifyContent: "center",
-      alignItems: "center",
       width: "190px !important",
       backgroundColor: "#FAEBE2",
       borderRadius: 10,
       overflow: "hidden",
-      padding: "0px 0px 15px",
-      boxShadow: "5px 3px 5px 1px rgba(0,0,0,0.34)",
+      padding: "0px 0px 20px",
+      boxShadow: "5px 3px 5px 1px rgba(0,0,0,0.56)",
    },
    itemImg: {
       width: "100%",

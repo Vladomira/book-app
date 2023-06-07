@@ -1,11 +1,13 @@
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { NoteProps, ReceivedNote } from "../types/note";
+import { Button } from "@material-ui/core";
+import { NoteProps, ReceivedNote } from "../../types/note";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../redux/store";
-import { notesOperations } from "../redux/user-notes";
+import { AppDispatch } from "../../redux/store";
+import { notesOperations } from "../../redux/user-notes";
+import { useStylesButtons } from "../CommonStyles/Buttons.style";
+import { useStylesNoteForm } from "./NoteForm.style";
 
 type FormProp = {
    id: number | null;
@@ -20,6 +22,8 @@ export const NoteForm: FC<FormProp> = ({ id, setIsOpen, currentNote }) => {
       formState: { errors },
    } = useForm<NoteProps>();
    const dispatch = useDispatch<AppDispatch>();
+   const btnClass = useStylesButtons();
+   const classes = useStylesNoteForm();
 
    const onSubmit = (data: NoteProps) => {
       const { text, chapter } = data;
@@ -41,7 +45,7 @@ export const NoteForm: FC<FormProp> = ({ id, setIsOpen, currentNote }) => {
    };
 
    return (
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
          <TextField
             label="Chapter"
             {...register("chapter")}
@@ -60,7 +64,11 @@ export const NoteForm: FC<FormProp> = ({ id, setIsOpen, currentNote }) => {
             rows={4}
             defaultValue={currentNote?.text || ""}
          />
-         <Button type="submit" variant="contained" color="primary">
+         <Button
+            type="submit"
+            variant="contained"
+            className={btnClass.orangeVarint}
+         >
             Submit
          </Button>
       </form>

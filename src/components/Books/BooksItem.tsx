@@ -1,19 +1,24 @@
 import { Link } from "react-router-dom";
 import { BooksType } from "../../types/book";
-import { AppDispatch } from "../../redux/store";
+import { AppDispatch, RootState } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { booksOperations } from "../../redux/user-books";
 import { Button, ListItem } from "@mui/material";
+import { toast } from "react-toastify";
 import { useStylesBooks } from "./Books.style";
 import { BookInfoBox } from "./BooksInfoBox";
-import { useStylesBookItem } from "../UnitedStyles/BookItem.style";
+import { useStylesBookItem } from "../CommonStyles/BookItem.style";
+import { useAppSelector } from "../../redux/hooks";
+import { Notification } from "../Notification";
 
 type BookItemProps = {
    el: BooksType;
 };
 
 export const BookItem = ({ el }: BookItemProps) => {
+   const userId = useAppSelector((state: RootState) => state.auth.user.id);
    const dispatch = useDispatch<AppDispatch>();
+   const userBooks = useAppSelector((state: RootState) => state.books);
    const classes = useStylesBooks();
    const bookClasses = useStylesBookItem();
 
@@ -23,6 +28,9 @@ export const BookItem = ({ el }: BookItemProps) => {
       "";
 
    const addBook = () => {
+      if (!userId) {
+         toast.error("Please authorize");
+      }
       dispatch(
          booksOperations.addBook({
             book: {
@@ -39,6 +47,7 @@ export const BookItem = ({ el }: BookItemProps) => {
             bookId: el.id,
          })
       );
+      toast.success("Book was added");
    };
    const { title, categories, averageRating } = el.volumeInfo;
 
@@ -49,6 +58,7 @@ export const BookItem = ({ el }: BookItemProps) => {
             <BookInfoBox title={title} categories={categories} />
          </Link>
          <Button
+            disabled={userBooks.some((book) => book.bookId === el.id)}
             type="button"
             onClick={() => addBook()}
             className={bookClasses.bookButton}
@@ -56,6 +66,7 @@ export const BookItem = ({ el }: BookItemProps) => {
          >
             Add to my
          </Button>
+         <Notification />
       </ListItem>
    );
 };
