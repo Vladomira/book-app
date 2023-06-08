@@ -49,7 +49,7 @@ export const BookItem = ({ el }: BookItemProps) => {
       );
       toast.success("Book was added");
    };
-   const { title, categories, averageRating } = el.volumeInfo;
+   const { title, categories } = el.volumeInfo;
 
    return (
       <ListItem className={classes.listItem}>

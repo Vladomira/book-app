@@ -1,23 +1,47 @@
+export type BookVolumeInfo = {
+   authors: string[];
+   imageLinks: {
+      smallThumbnail: string;
+      thumbnail: string;
+      large: string;
+      small: string;
+   };
+   pageCount: number;
+   publishedDate: string;
+   publisher: string;
+   categories: string[];
+   title: string;
+   averageRating: number;
+   description: string;
+};
 export type BooksType = {
    id: string;
-   volumeInfo: {
-      authors: string[];
-      imageLinks: { smallThumbnail: string; thumbnail: string };
-      publishedDate: string;
-      publisher: string;
-      categories: string[];
-      title: string;
-      averageRating: number;
-      description: string;
-   };
+   volumeInfo: BookVolumeInfo;
+   // volumeInfo: {
+   //    authors: string[];
+   //    imageLinks: {
+   //       smallThumbnail: string;
+   //       thumbnail: string;
+   //       large: string;
+   //       small: string;
+   //    };
+   //    pageCount: number;
+   //    publishedDate: string;
+   //    publisher: string;
+   //    categories: string[];
+   //    title: string;
+   //    averageRating: number;
+   //    description: string;
+   // };
    dbId?: number;
 };
-export const initialBook = {
+export const initialBook: BooksType = {
    id: "",
    volumeInfo: {
       authors: [""],
-      imageLinks: { smallThumbnail: "", thumbnail: "" },
+      imageLinks: { smallThumbnail: "", thumbnail: "", large: "", small: "" },
       publishedDate: "",
+      pageCount: 0,
       publisher: "",
       categories: [""],
       title: "",

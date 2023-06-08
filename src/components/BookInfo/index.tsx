@@ -9,9 +9,14 @@ import { AppDispatch, RootState } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { booksOperations } from "../../redux/user-books";
 import { notesOperations } from "../../redux/user-notes";
-import { NoteItem } from "../notes/NoteItem";
 import { ReceivedNote } from "../../types/note";
 import { MyNotesList } from "../MyNotes";
+import { Box, Button } from "@mui/material";
+import { useStylesBook } from "./Book.style";
+import { TextComponent } from "../TextComponent";
+import { BookMainInfo } from "./BookMainInfo";
+import { DownLoadBox } from "./DownLoadBox";
+import { useStylesButtons } from "../CommonStyles/Buttons.style";
 
 export const BookInfo: FC<SinglePageProps> = ({ id }) => {
    const [data, setData] = useState<BooksType>(initialBook);
@@ -24,6 +29,9 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
    const [bookFormat, setBookFormat] = useState({ pdf: "", epub: "" });
    const userId = useAppSelector((state: RootState) => state.auth.user.id);
    const dispatch = useDispatch<AppDispatch>();
+
+   const classes = useStylesBook();
+   const btnClass = useStylesButtons();
 
    useEffect(() => {
       fetchById(id).then((data) => {
@@ -55,60 +63,41 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
       }
    }, [dispatch, id, userId]);
 
+   const { volumeInfo } = data;
+
    return (
-      <div>
+      <Box style={{ paddingBottom: "50px" }}>
          {data.id && (
             <>
-               <p>{data.volumeInfo.title}</p>
-               <img
-                  style={{
-                     width: "110px",
-                  }}
-                  src={
-                     data.volumeInfo.imageLinks?.smallThumbnail ||
-                     data.volumeInfo.imageLinks?.thumbnail ||
-                     ""
-                  }
-                  alt=""
+               <BookMainInfo data={volumeInfo} />
+
+               {(bookFormat.pdf || bookFormat.epub) && (
+                  <DownLoadBox pdf={bookFormat.pdf} epub={bookFormat.epub} />
+               )}
+
+               <TextComponent
+                  className={classes.info}
+                  text={volumeInfo.description}
                />
-               <p>{data.volumeInfo.authors?.[0]}</p>
-               <p>{data.volumeInfo.categories?.[0]}</p>
-               <p>{data.volumeInfo.description}</p>
-               {bookFormat.pdf && <a href={bookFormat.pdf}>Download</a>}
-               {bookFormat.epub && <a href={bookFormat.epub}>Download</a>}
-               <a href="https://www.acsmconverter.com/">
-                  If you need to convert downloaded boook
-               </a>
             </>
          )}
          {dbBookId && (
-            <button
+            <Button
                type="button"
                onClick={() => setIsOpen(!isOpen)}
-               style={{ marginBottom: "30px" }}
+               style={{ marginBottom: "30px", marginTop: "30px" }}
+               className={btnClass.cherryVariant}
             >
                Create note
-            </button>
+            </Button>
          )}
-
+         {/* {ADD TO MY} */}
          {isOpen && (
             <ModalWrapper setIsOpen={setIsOpen} isOpen={isOpen}>
                <NoteForm id={dbBookId} setIsOpen={setIsOpen} />
             </ModalWrapper>
          )}
-         {booksNotes[0]?.id === null ? (
-            <p>No notes yet</p>
-         ) : (
-            <MyNotesList notes={booksNotes} />
-         )}
-      </div>
+         {booksNotes[0].id && <MyNotesList notes={booksNotes} />}
+      </Box>
    );
 };
-
-// https://www.googleapis.com/books/v1/volumes?q=isbn:<your_isbn_here>
-// https://www.googleapis.com/books/v1/volumes?q=isbn:0735619670
-// https://openlibrary.org/isbn/9780140328721.json
-// https://openlibrary.org/search.json?isbn=0521898587
-// https://openlibrary.org/isbn/0521898587.json
-// http://openlibrary.org/api/books?bibkeys=ISBN:0201558025,LCCN:93005405
-// fetch("https://openlibrary.org/isbn/0521898587.json?jscmd=viewapi")

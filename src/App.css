@@ -26,4 +26,5 @@ img {
 body {
    font-weight: 400;
    background-color: #008080 !important;
+   box-sizing: border-box;
 }
