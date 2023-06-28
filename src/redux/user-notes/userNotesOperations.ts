@@ -1,11 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
 import { UserState } from "../../types/auth";
-import { NoteProps } from "../../types/note";
-
-// axios.defaults.baseURL = "http://localhost:8080/api";
-axios.defaults.baseURL = process.env.REACT_APP_DB_URL;
+import { CreateNote, NoteProps } from "../../types/note";
+import $api from "../../api/interceptor";
 
 const createNote = createAsyncThunk(
    "notes/create",
@@ -17,8 +13,12 @@ const createNote = createAsyncThunk(
          return thunkAPI.rejectWithValue({ message: "Please authorize" });
       }
       const { chapter, text, id } = credentials;
+
       try {
-         const { data } = await axios.post(`/notes/${id}`, { chapter, text });
+         const { data } = await $api.post(`/notes/${id}`, {
+            chapter,
+            text,
+         });
 
          return data;
       } catch (error: any) {
@@ -36,7 +36,7 @@ const getNotes = createAsyncThunk("notes/get", async (id: string, thunkAPI) => {
    }
 
    try {
-      const { data } = await axios.get(`/notes/${id}`);
+      const { data } = await $api.get(`/notes/${id}`);
 
       return data;
    } catch (error: any) {
@@ -55,8 +55,7 @@ const getNotesByBookId = createAsyncThunk(
       }
 
       try {
-         const { data } = await axios.get(`/notes/book-notes/${bookId}`);
-
+         const { data } = await $api.get(`/notes/book-notes/${bookId}`);
          return data;
       } catch (error: any) {
          return thunkAPI.rejectWithValue(error);
@@ -75,7 +74,7 @@ const updateNoteById = createAsyncThunk(
       }
       try {
          const { id, text, chapter } = credentials;
-         const { data } = await axios.patch(`/notes/${id}`, {
+         const { data } = await $api.patch(`/notes/${id}`, {
             text,
             chapter,
          });
@@ -96,7 +95,7 @@ const deleteNoteById = createAsyncThunk(
          return thunkAPI.rejectWithValue({ message: "Please authorize" });
       }
       try {
-         const { data } = await axios.delete(`/notes/${noteId}`);
+         const { data } = await $api.delete(`/notes/${noteId}`);
 
          return data;
       } catch (error: any) {

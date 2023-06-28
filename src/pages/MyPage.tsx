@@ -8,6 +8,7 @@ import { BooksCarousel } from "../components/MyPageInfo/Books/BooksCarousel";
 import { PageNav } from "../components/PageNav";
 import { MyNotesList } from "../components/MyNotes";
 import { ReceivedNote } from "../types/note";
+import { useStylesBook } from "../components/BookInfo/Book.style";
 
 export const MyPage = () => {
    const userId = useAppSelector((state: RootState) => state.auth.user.id);
@@ -16,6 +17,7 @@ export const MyPage = () => {
       (state: RootState) => state.notes as ReceivedNote[]
    );
    const dispatch = useDispatch<AppDispatch>();
+   const classes = useStylesBook();
 
    useEffect(() => {
       if (userId) {
@@ -27,16 +29,25 @@ export const MyPage = () => {
    return (
       <>
          <PageNav />
-         <BooksCarousel userBooks={userBooks} />
-
-         <div
-            style={{
-               marginTop: "100px",
-               paddingBottom: "100px",
-            }}
-         >
-            <MyNotesList notes={userNotes} />
-         </div>
+         {userBooks[0]?.bookId ? (
+            <BooksCarousel userBooks={userBooks} />
+         ) : (
+            <p className={classes.title}>No books yet. You can add book</p>
+         )}
+         {userNotes[0]?.id ? (
+            <div
+               style={{
+                  marginTop: "100px",
+                  paddingBottom: "100px",
+               }}
+            >
+               <MyNotesList notes={userNotes} />
+            </div>
+         ) : (
+            <p className={classes.title} style={{ marginTop: "30px" }}>
+               No notes yet
+            </p>
+         )}
       </>
    );
 };

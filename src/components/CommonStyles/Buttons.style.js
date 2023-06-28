@@ -33,11 +33,11 @@ export const useStylesButtons = makeStyles(() => ({
    },
    orangeVarint: {
       marginTop: "20px",
-      backgroundColor: "#FF802D",
+      backgroundColor: "#FF802D !important",
       color: "#FFFFFF",
 
       "&:hover": {
-         backgroundColor: "FF9900 !important",
+         backgroundColor: "#FF9900 !important",
       },
    },
    btnsBox: {

@@ -58,10 +58,3 @@ export const BooksPage: FC = () => {
       </>
    );
 };
-// "https://www.googleapis.com/books/v1/volumes?q=isbn:" +
-//    query +
-//    "&key=" +
-//    apiKey,
-// { method: "get" }
-
-// nytimes: jC3tUx7sOOydWYTSMMWEi7tCwDWvUzd3

@@ -1,4 +1,4 @@
-export type SwitchForm = "Login" | "Signup";
+export type SwitchForm = "Log in" | "Sign up";
 
 export type AuthSwitcherProps = {
    setSwitchForm: (prop: SwitchForm) => void;

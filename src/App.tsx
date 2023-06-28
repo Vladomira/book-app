@@ -8,28 +8,32 @@ import { AuthPage } from "./pages/AuthPage";
 import { NaBar } from "./components/NavBar";
 import { RequireAuth } from "./hoc/RequireAuth";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "./redux/store";
+import { AppDispatch, RootState } from "./redux/store";
 import { authOperations } from "./redux/auth";
 import { MyBooks } from "./pages/MyBooks";
 import { MyPage } from "./pages/MyPage";
 import "./App.css";
 import { BookPage } from "./pages/BookPage";
+import { useAppSelector } from "./redux/hooks";
 
 function App() {
    const dispatch = useDispatch<AppDispatch>();
    const token = localStorage.getItem("persist:auth");
+   const tokenData = useAppSelector((state: RootState) => state.auth.token);
 
    useEffect(() => {
       if (token) {
-         dispatch(authOperations.getCurrentUser());
+         const parsedToken = JSON.parse(token).token.replace(/"/g, "");
+
+         parsedToken.length > 0 && dispatch(authOperations.checkAuth());
       }
-   }, [dispatch, token]);
+   }, [dispatch, tokenData]);
 
    return (
       <Routes>
          <Route path="/" element={<NaBar />}>
             <Route index path="/" element={<BooksPage />} />
-            <Route path=":id" element={<BookPage />} />
+            <Route path="/:id" element={<BookPage />} />
 
             <Route path="auth" element={<AuthPage />} />
             <Route
@@ -57,7 +61,7 @@ function App() {
                }
             />
 
-            <Route path="*" element={<NotfoundPage />} />
+            <Route path="/*" element={<NotfoundPage />} />
          </Route>
       </Routes>
    );

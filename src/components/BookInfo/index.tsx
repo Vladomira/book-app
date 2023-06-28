@@ -1,5 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { SinglePageProps } from "../../types";
+import { toast } from "react-toastify";
+import { Notification } from "../Notification";
 import { BooksType, initialBook } from "../../types/book";
 import { fetchById } from "../../api/books";
 import { ModalWrapper } from "../Modal";
@@ -17,6 +19,7 @@ import { TextComponent } from "../TextComponent";
 import { BookMainInfo } from "./BookMainInfo";
 import { DownLoadBox } from "./DownLoadBox";
 import { useStylesButtons } from "../CommonStyles/Buttons.style";
+import { getAuthor, getImage } from "../../helpers/getFromBook";
 
 export const BookInfo: FC<SinglePageProps> = ({ id }) => {
    const [data, setData] = useState<BooksType>(initialBook);
@@ -34,40 +37,68 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
    const btnClass = useStylesButtons();
 
    useEffect(() => {
-      fetchById(id).then((data) => {
-         const accessInfo = data.accessInfo;
-         if (accessInfo?.epub.isAvailable) {
-            const epubLink = accessInfo?.epub?.acsTokenLink;
-            setBookFormat((prev) => {
-               return { ...prev, epub: epubLink };
-            });
-         }
+      fetchById(id)
+         .then((data) => {
+            const accessInfo = data.accessInfo;
+            if (accessInfo?.epub.isAvailable) {
+               const epubLink = accessInfo?.epub?.acsTokenLink;
+               setBookFormat((prev) => {
+                  return { ...prev, epub: epubLink };
+               });
+            }
 
-         if (accessInfo?.pdf && accessInfo?.pdf.isAvailable) {
-            const pdfLink = accessInfo?.pdf?.acsTokenLink;
-            setBookFormat((prev) => {
-               return { ...prev, pdf: pdfLink };
-            });
-         }
-         setData(data);
-      });
+            if (accessInfo?.pdf && accessInfo?.pdf.isAvailable) {
+               const pdfLink = accessInfo?.pdf?.acsTokenLink;
+               setBookFormat((prev) => {
+                  return { ...prev, pdf: pdfLink };
+               });
+            }
+            setData(data);
+         })
+         .catch((error) => {
+            console.log("error2", error);
+
+            return new Error(error);
+         });
    }, []);
    useEffect(() => {
       if (userId) {
          dispatch(booksOperations.getBooks());
       }
       const matchingBook = books.find((el) => el.bookId === id);
+
       if (matchingBook) {
          setDbBookId(matchingBook.id);
          dispatch(notesOperations.getNotesByBookId(matchingBook.id));
       }
-   }, [dispatch, id, userId]);
-
+   }, []);
    const { volumeInfo } = data;
+
+   const addBook = () => {
+      if (!userId) {
+         toast.error("Please authorize");
+      }
+      if (userId) {
+         dispatch(
+            booksOperations.addBook({
+               book: {
+                  favorite: false,
+                  finished: false,
+                  inProgress: false,
+                  author: getAuthor(data),
+                  title: volumeInfo.title,
+                  image: getImage(data),
+               },
+               bookId: id,
+            })
+         );
+         toast.success("Book was added");
+      }
+   };
 
    return (
       <Box style={{ paddingBottom: "50px" }}>
-         {data.id && (
+         {data?.id && (
             <>
                <BookMainInfo data={volumeInfo} />
 
@@ -81,7 +112,7 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
                />
             </>
          )}
-         {dbBookId && (
+         {dbBookId ? (
             <Button
                type="button"
                onClick={() => setIsOpen(!isOpen)}
@@ -90,14 +121,25 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
             >
                Create note
             </Button>
+         ) : (
+            <Button
+               type="button"
+               onClick={() => addBook()}
+               style={{ marginBottom: "30px", marginTop: "30px" }}
+               className={btnClass.cherryVariant}
+            >
+               Add to my
+            </Button>
          )}
-         {/* {ADD TO MY} */}
-         {isOpen && (
+
+         {isOpen && dbBookId !== null && (
             <ModalWrapper setIsOpen={setIsOpen} isOpen={isOpen}>
                <NoteForm id={dbBookId} setIsOpen={setIsOpen} />
             </ModalWrapper>
          )}
-         {booksNotes[0].id && <MyNotesList notes={booksNotes} />}
+
+         {booksNotes[0]?.id && <MyNotesList notes={booksNotes} />}
+         <Notification />
       </Box>
    );
 };

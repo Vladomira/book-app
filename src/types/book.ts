@@ -67,7 +67,7 @@ export type AddBookBody = {
 
 export type AddBookProps = {
    book: AddBookBody;
-   bookId: string;
+   bookId: string | undefined;
 };
 type Favorite = { favorite: boolean };
 type Finished = { finished: boolean };

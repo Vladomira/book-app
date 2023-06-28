@@ -12,6 +12,7 @@ export const useStylesBookItem = makeStyles(() => ({
       minHeight: "48px",
    },
    bookInfoCategories: {
+      minHeight: "39px ",
       fontWeight: "600 !important",
       fontSize: "13px !important",
       marginTop: "10px !important",

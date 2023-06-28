@@ -26,46 +26,42 @@ export const BooksCarousel: FC<BooksCarouselProps> = ({ userBooks }) => {
    const dispatch = useDispatch<AppDispatch>();
    return (
       <SliderComponent>
-         {userBooks.map((el) => {
-            return (
-               <Box key={el.id} className={classes.slide}>
-                  <img className={classes.itemImg} src={el.image} alt="" />
-                  <Link
-                     to={`/${el.bookId}`}
-                     style={{ textDecoration: "none" }}
-                     className={bookClasses.bookInfoBox}
-                  >
-                     <Typography className={bookClasses.bookInfoTitle}>
-                        {el.title.slice(0, 28)}
-                     </Typography>
-                  </Link>
+         {userBooks.map((el) => (
+            <Box key={el.id} className={classes.slide}>
+               <img className={classes.itemImg} src={el.image} alt="" />
 
-                  <Box
-                     className={btnClass.btnsBox}
-                     style={{ padding: "0px 7px" }}
+               <Link
+                  to={`/${el.bookId}`}
+                  style={{ textDecoration: "none" }}
+                  className={bookClasses.bookInfoBox}
+               >
+                  <Typography className={bookClasses.bookInfoTitle}>
+                     {el.title.slice(0, 28)}
+                  </Typography>
+               </Link>
+
+               <Box className={btnClass.btnsBox} style={{ padding: "0px 7px" }}>
+                  <Button
+                     className={btnClass.deleteBtn}
+                     type="button"
+                     onClick={() => {
+                        dispatch(booksOperations.deleteBook(el.id));
+                        toast.success("Book was deleted");
+                     }}
                   >
-                     <Button
-                        className={btnClass.deleteBtn}
-                        type="button"
-                        onClick={() => {
-                           dispatch(booksOperations.deleteBook(el.id));
-                           toast.success("Book was deleted");
-                        }}
-                     >
-                        <DeleteIcon />
-                     </Button>
-                     <MyBookStatus
-                        bookId={el.id}
-                        credentials={{
-                           finished: el.finished,
-                           favorite: el.favorite,
-                           inProgress: el.inProgress,
-                        }}
-                     />
-                  </Box>
+                     <DeleteIcon />
+                  </Button>
+                  <MyBookStatus
+                     bookId={el.id}
+                     credentials={{
+                        finished: el.finished,
+                        favorite: el.favorite,
+                        inProgress: el.inProgress,
+                     }}
+                  />
                </Box>
-            );
-         })}
+            </Box>
+         ))}
          <Notification />
       </SliderComponent>
    );

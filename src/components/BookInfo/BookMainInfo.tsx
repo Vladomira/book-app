@@ -13,7 +13,7 @@ type BookMainInfoProps = {
 export const BookMainInfo: FC<BookMainInfoProps> = ({ data }) => {
    const classes = useStylesBook();
    const img =
-      data.imageLinks?.smallThumbnail || data.imageLinks?.thumbnail || "";
+      data?.imageLinks?.smallThumbnail || data?.imageLinks?.thumbnail || "";
    const bookData = ` ${
       data.publishedDate ? `● ${chageFormat(data.publishedDate)}` : ""
    }`;

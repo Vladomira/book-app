@@ -30,11 +30,11 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
    const onSubmit = (data: FormData) => {
       const { name, email, password } = data;
       switch (switcher) {
-         case "Signup":
+         case "Sign up":
             dispatch(authOperations.register({ name, email, password }));
             break;
 
-         case "Login":
+         case "Log in":
             dispatch(authOperations.logIn({ email, password }));
             break;
       }
@@ -43,7 +43,7 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
    };
    return (
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-         {switcher === "Signup" && (
+         {switcher === "Sign up" && (
             <TextField
                {...register("name", { required: "Name is required" })}
                label="Name"
@@ -90,7 +90,7 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
             variant="contained"
             className={btnClass.orangeVarint}
          >
-            {switcher === "Signup" ? "Signup" : "Login"}
+            {switcher === "Sign up" ? "Sign up" : "Login"}
          </Button>
       </form>
    );

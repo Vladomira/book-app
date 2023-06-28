@@ -12,19 +12,15 @@ export type FormData = {
 export type FormUserData = FormData & { id: string };
 export interface AuthState {
    user: UserData;
-   token: null | string;
+   token: string;
    isLoggedIn: boolean;
-   isLoading: boolean;
-   isFetchingCurrentUser: boolean;
    error: any;
 }
 
 export const initialState: AuthState = {
    user: { email: "", name: "", id: "" },
-   token: null,
-   isLoading: false,
+   token: "",
    isLoggedIn: false,
-   isFetchingCurrentUser: false,
    error: "",
 };
 export const initialUserForm = {
@@ -34,3 +30,9 @@ export const initialUserForm = {
    password: "",
 };
 export type UserState = { auth: AuthState };
+
+export interface AuthResponse {
+   user: UserData;
+   accessToken: string;
+   refreshToken: string;
+}

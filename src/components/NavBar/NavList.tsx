@@ -12,7 +12,7 @@ export const NavList = () => {
          <CustomLink to="/">Books</CustomLink>
 
          {!user.id ? (
-            <CustomLink to="/auth">Signin</CustomLink>
+            <CustomLink to="/auth">Sign up</CustomLink>
          ) : (
             <CustomLink to={`user/${user.id}`}>My page</CustomLink>
          )}

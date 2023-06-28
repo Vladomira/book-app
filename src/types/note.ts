@@ -5,7 +5,11 @@ export type NoteProps = NoteFormProps & {
    text: string;
    chapter: string;
 };
-
+export interface CreateNote {
+   text: string;
+   chapter: string;
+   id: number | null;
+}
 export const noteInit: NoteProps = {
    text: "",
    chapter: "",

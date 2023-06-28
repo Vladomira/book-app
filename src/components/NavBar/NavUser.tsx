@@ -12,6 +12,7 @@ export const NavUser = () => {
    const dispatch = useDispatch<AppDispatch>();
    const navigate = useNavigate();
    const classes = useStylesNavBar();
+
    return (
       <>
          {user.name && (

@@ -10,6 +10,7 @@ import { BookInfoBox } from "./BooksInfoBox";
 import { useStylesBookItem } from "../CommonStyles/BookItem.style";
 import { useAppSelector } from "../../redux/hooks";
 import { Notification } from "../Notification";
+import { getAuthor, getImage } from "../../helpers/getFromBook";
 
 type BookItemProps = {
    el: BooksType;
@@ -22,39 +23,32 @@ export const BookItem = ({ el }: BookItemProps) => {
    const classes = useStylesBooks();
    const bookClasses = useStylesBookItem();
 
-   const getImage =
-      el.volumeInfo.imageLinks?.smallThumbnail ||
-      el.volumeInfo.imageLinks?.thumbnail ||
-      "";
-
    const addBook = () => {
       if (!userId) {
          toast.error("Please authorize");
       }
-      dispatch(
-         booksOperations.addBook({
-            book: {
-               favorite: true,
-               finished: false,
-               inProgress: true,
-               author:
-                  el.volumeInfo.authors?.length > 0
-                     ? el.volumeInfo.authors[0]
-                     : "",
-               title: el.volumeInfo.title,
-               image: getImage,
-            },
-            bookId: el.id,
-         })
-      );
-      toast.success("Book was added");
+      if (userId) {
+         dispatch(
+            booksOperations.addBook({
+               book: {
+                  favorite: false,
+                  finished: false,
+                  inProgress: false,
+                  author: getAuthor(el),
+                  title: el.volumeInfo?.title,
+                  image: getImage(el),
+               },
+               bookId: el.id,
+            })
+         );
+         toast.success("Book was added");
+      }
    };
    const { title, categories } = el.volumeInfo;
-
    return (
       <ListItem className={classes.listItem}>
          <Link to={`/${el.id}`} className={classes.link}>
-            <img className={classes.bookImg} src={getImage} alt="" />
+            <img className={classes.bookImg} src={getImage(el)} alt="" />
             <BookInfoBox title={title} categories={categories} />
          </Link>
          <Button

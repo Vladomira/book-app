@@ -1,47 +1,46 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import { AddBookProps, PossibleStatus } from "../../types/book";
 import { UserState } from "../../types/auth";
-
-// axios.defaults.baseURL = "http://localhost:8080/api/";
-axios.defaults.baseURL = process.env.REACT_APP_DB_URL;
+import $api from "../../api/interceptor";
 
 const addBook = createAsyncThunk(
-   "book/add",
+   "books/add",
    async (credentials: AddBookProps, thunkAPI) => {
       const state = thunkAPI.getState() as UserState;
       const { book, bookId } = credentials;
 
       const persistedToken = state.auth.token;
+
       if (!persistedToken) {
          return thunkAPI.rejectWithValue({ message: "Please authorize" });
       }
       try {
-         const { data } = await axios.post(`user-book/${bookId}`, { book });
+         const { data } = await $api.post(`/books/${bookId}`, { book });
          return data;
       } catch (error: any) {
-         return thunkAPI.rejectWithValue(error);
+         return thunkAPI.rejectWithValue(error.response.data.message);
       }
    }
 );
 
-const getBooks = createAsyncThunk("book/get", async (_, thunkAPI) => {
+const getBooks = createAsyncThunk("books/get", async (_, thunkAPI) => {
    const state = thunkAPI.getState() as UserState;
 
    const persistedToken = state.auth.token;
+
    if (!persistedToken) {
       return thunkAPI.rejectWithValue({ message: "Please authorize" });
    }
    try {
-      const { data } = await axios.get("user-book");
+      const { data } = await $api.get("/books");
       return data;
    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.response.data.message);
    }
 });
 
 const deleteBook = createAsyncThunk(
-   "book/delete",
+   "books/delete",
    async (id: number, thunkAPI) => {
       const state = thunkAPI.getState() as UserState;
       const persistedToken = state.auth.token;
@@ -49,11 +48,11 @@ const deleteBook = createAsyncThunk(
          return thunkAPI.rejectWithValue({ message: "Please authorize" });
       }
       try {
-         const { data } = await axios.delete(`user-book/${id}`);
+         const { data } = await $api.delete(`/books/${id}`);
 
          return data;
       } catch (error: any) {
-         return thunkAPI.rejectWithValue(error);
+         return thunkAPI.rejectWithValue(error.response.data.message);
       }
    }
 );
@@ -61,7 +60,7 @@ const deleteBook = createAsyncThunk(
 type ChangeStatusProp = { credentials: PossibleStatus; bookId: number };
 
 export const changeBookStatus = createAsyncThunk(
-   "book/change-status",
+   "books/change-status",
    async (
       { credentials, bookId }: ChangeStatusProp,
 
@@ -73,14 +72,14 @@ export const changeBookStatus = createAsyncThunk(
          return thunkAPI.rejectWithValue({ message: "Please authorize" });
       }
       try {
-         const { data } = await axios.patch(
-            `user-book/${bookId}/status`,
+         const { data } = await $api.patch(
+            `/books/${bookId}/status`,
             credentials
          );
 
          return data;
       } catch (error: any) {
-         return thunkAPI.rejectWithValue(error);
+         return thunkAPI.rejectWithValue(error.response.data.message);
       }
    }
 );

@@ -18,11 +18,10 @@ export const BookInfoBox: FC<BookInfoBoxProps> = ({ title, categories }) => {
          <Typography className={bookClasses.bookInfoTitle}>
             {title.slice(0, 28)}
          </Typography>
-         {categories?.length > 0 && (
-            <Typography className={bookClasses.bookInfoCategories}>
-               Categorie: {booksCategories}
-            </Typography>
-         )}
+
+         <Typography className={bookClasses.bookInfoCategories}>
+            {categories?.length > 0 && `Categorie: ${booksCategories}`}
+         </Typography>
       </div>
    );
 };

@@ -19,7 +19,6 @@ export const MyBookStatus = ({ credentials, bookId }: BookStatusWithId) => {
       inProgress,
    });
    const dispatch = useDispatch<AppDispatch>();
-   // const classes = useStylesBooksStatus();
    const btnsClasses = useStylesButtons();
 
    const onHandleChange = (event: SyntheticEvent) => {
