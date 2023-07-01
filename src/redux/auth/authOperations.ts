@@ -1,20 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { UserState, FormData, AuthResponse } from "../../types/auth";
+import { FormData, AuthResponse } from "../../types/auth";
 import $api from "../../api/interceptor";
 const url = process.env.REACT_APP_DB_URL;
-// axios.defaults.baseURL = "http://localhost:8080/api/";
-
-// axios.defaults.baseURL = process.env.REACT_APP_DB_URL;
-
-// const token = {
-//    set(token: string) {
-//       axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-//    },
-//    unset() {
-//       axios.defaults.headers.common.Authorization = "";
-//    },
-// };
 
 const register = createAsyncThunk(
    "auth/signup",
@@ -62,13 +50,7 @@ const logout = createAsyncThunk(
       }
    }
 );
-// const state = thunkAPI.getState() as UserState;
 
-// const persistedToken = state.auth.token;
-// console.log("check", persistedToken);
-// if (!persistedToken) {
-//    return thunkAPI.rejectWithValue({ message: "Please authorize" });
-// }
 const checkAuth = createAsyncThunk("auth/refresh", async (_, thunkAPI) => {
    try {
       const { data } = await axios.get<AuthResponse>(`${url}user/refresh`, {
@@ -85,7 +67,7 @@ const authOperations = {
    register,
    logIn,
    logout,
-   // getCurrentUser,
+
    checkAuth,
 };
 export default authOperations;

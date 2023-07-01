@@ -35,6 +35,7 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
 
    const classes = useStylesBook();
    const btnClass = useStylesButtons();
+   console.log("dbBookId", dbBookId);
 
    useEffect(() => {
       fetchById(id)
@@ -71,7 +72,7 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
          setDbBookId(matchingBook.id);
          dispatch(notesOperations.getNotesByBookId(matchingBook.id));
       }
-   }, []);
+   }, [userId]);
    const { volumeInfo } = data;
 
    const addBook = () => {
@@ -131,7 +132,6 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
                Add to my
             </Button>
          )}
-
          {isOpen && dbBookId !== null && (
             <ModalWrapper setIsOpen={setIsOpen} isOpen={isOpen}>
                <NoteForm id={dbBookId} setIsOpen={setIsOpen} />

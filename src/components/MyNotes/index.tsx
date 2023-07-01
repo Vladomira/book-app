@@ -9,16 +9,7 @@ export const MyNotesList: FC<MyNotesListProps> = ({ notes }) => {
    return (
       <SliderComponent>
          {notes.map((el) => (
-            <MyNotesItem
-               key={el.id}
-               bookId={el.bookId}
-               chapter={el.chapter}
-               createdAt={el.createdAt}
-               id={el.id}
-               text={el.text}
-               updatedAt={el.updatedAt}
-               userId={el.userId}
-            />
+            <MyNotesItem key={el.id} note={el} />
          ))}
       </SliderComponent>
    );
