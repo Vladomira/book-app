@@ -28,21 +28,11 @@ const logIn = createAsyncThunk(
       try {
          const { data } = await $api.post<AuthResponse>(
             "/user/login",
-            credentials
+            credentials,
+            {
+               withCredentials: true,
+            }
          );
-
-         return data;
-      } catch (error: any) {
-         return rejectWithValue(error.response.data.message);
-      }
-   }
-);
-
-const logout = createAsyncThunk(
-   "auth/logout",
-   async (credentials: { id: string }, { rejectWithValue }) => {
-      try {
-         const { data } = await $api.post("/user/logout", credentials);
 
          return data;
       } catch (error: any) {
@@ -62,6 +52,21 @@ const checkAuth = createAsyncThunk("auth/refresh", async (_, thunkAPI) => {
       return thunkAPI.rejectWithValue(error.response.data.message);
    }
 });
+
+const logout = createAsyncThunk(
+   "auth/logout",
+   async (credentials: { id: string }, { rejectWithValue }) => {
+      try {
+         const { data } = await $api.post("/user/logout", credentials, {
+            withCredentials: true,
+         });
+
+         return data;
+      } catch (error: any) {
+         return rejectWithValue(error.response.data.message);
+      }
+   }
+);
 
 const authOperations = {
    register,

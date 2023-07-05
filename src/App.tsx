@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
 import { BooksPage } from "./pages/BooksPage";
 import { NotesPage } from "./pages/NotesPage";
 import { NotfoundPage } from "./pages/NotfoundPage";
@@ -7,28 +6,26 @@ import { AuthPage } from "./pages/AuthPage";
 
 import { NaBar } from "./components/NavBar";
 import { RequireAuth } from "./hoc/RequireAuth";
-import { useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "./redux/store";
-import { authOperations } from "./redux/auth";
 import { MyBooks } from "./pages/MyBooks";
 import { MyPage } from "./pages/MyPage";
 import "./App.css";
 import { BookPage } from "./pages/BookPage";
-import { useAppSelector } from "./redux/hooks";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "./redux/store";
+import { useEffect } from "react";
+import { authOperations } from "./redux/auth";
 
 function App() {
    const dispatch = useDispatch<AppDispatch>();
    const token = localStorage.getItem("persist:auth");
-   const tokenData = useAppSelector((state: RootState) => state.auth.token);
 
    useEffect(() => {
-      if (token) {
+      if (token?.length) {
          const parsedToken = JSON.parse(token).token.replace(/"/g, "");
 
          parsedToken.length > 0 && dispatch(authOperations.checkAuth());
       }
-   }, [dispatch, tokenData]);
-
+   }, []);
    return (
       <Routes>
          <Route path="/" element={<NaBar />}>

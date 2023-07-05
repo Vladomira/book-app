@@ -70,7 +70,7 @@ export const useStylesButtons = makeStyles(() => ({
    updateBtn: {
       minWidth: "24px",
       padding: "3px 3px !important",
-      color: "#FF7F50",
+      color: "#FF7F50  !important",
 
       "&:hover": {
          backgroundColor: "#008080 !important",

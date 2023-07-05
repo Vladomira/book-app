@@ -35,7 +35,6 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
 
    const classes = useStylesBook();
    const btnClass = useStylesButtons();
-   console.log("dbBookId", dbBookId);
 
    useEffect(() => {
       fetchById(id)
@@ -57,8 +56,6 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
             setData(data);
          })
          .catch((error) => {
-            console.log("error2", error);
-
             return new Error(error);
          });
    }, []);
