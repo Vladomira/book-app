@@ -45,6 +45,7 @@ export const BookItem = ({ el }: BookItemProps) => {
       }
    };
    const { title, categories } = el.volumeInfo;
+
    return (
       <ListItem className={classes.listItem}>
          <Link to={`/${el.id}`} className={classes.link}>
@@ -52,7 +53,9 @@ export const BookItem = ({ el }: BookItemProps) => {
             <BookInfoBox title={title} categories={categories} />
          </Link>
          <Button
-            disabled={userBooks.some((book) => book.bookId === el.id)}
+            disabled={
+               userId ? userBooks.some((book) => book.bookId === el.id) : false
+            }
             type="button"
             onClick={() => addBook()}
             className={bookClasses.bookButton}

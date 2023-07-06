@@ -76,24 +76,3 @@ const authOperations = {
    checkAuth,
 };
 export default authOperations;
-// const getCurrentUser = createAsyncThunk("auth/refresh", async (_, thunkAPI) => {
-// const state = thunkAPI.getState() as UserState;
-
-// const persistedToken = state.auth.token;
-// if (!persistedToken) {
-//    return thunkAPI.rejectWithValue({ message: "Please authorize" });
-// } else {
-//       try {
-//          // token.set(persistedToken);
-//          console.log("persistedToken", persistedToken);
-
-//          token.set(persistedToken);
-//          const data = await axios.get(`${url}user/current`);
-//          console.log("data", data);
-
-//          return data;
-//       } catch (error) {
-//          return thunkAPI.rejectWithValue(error);
-//       }
-//    }
-// });

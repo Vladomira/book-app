@@ -60,9 +60,6 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
          });
    }, []);
    useEffect(() => {
-      if (userId) {
-         dispatch(booksOperations.getBooks());
-      }
       const matchingBook = books.find((el) => el.bookId === id);
 
       if (matchingBook) {

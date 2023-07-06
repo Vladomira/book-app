@@ -17,10 +17,11 @@ import { authOperations } from "./redux/auth";
 
 function App() {
    const dispatch = useDispatch<AppDispatch>();
+
    const token = localStorage.getItem("persist:auth");
 
    useEffect(() => {
-      if (token?.length) {
+      if (token) {
          const parsedToken = JSON.parse(token).token.replace(/"/g, "");
 
          parsedToken.length > 0 && dispatch(authOperations.checkAuth());
