@@ -4,6 +4,7 @@ import axios, {
    InternalAxiosRequestConfig,
 } from "axios";
 import { AuthResponse } from "../types/auth";
+import { getTokenFromLocalStorage } from "../helpers/getTokenFromStorage";
 
 const $api: AxiosInstance = axios.create({
    withCredentials: true,
@@ -11,11 +12,10 @@ const $api: AxiosInstance = axios.create({
 });
 
 $api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-   const token = localStorage.getItem("persist:auth");
    config.headers = (config.headers as AxiosRequestHeaders) || {};
-   if (token) {
-      const parsedToken = JSON.parse(token).token.replace(/"/g, "");
-      config.headers.Authorization = `Bearer ${parsedToken}`;
+
+   if (getTokenFromLocalStorage()) {
+      config.headers.Authorization = `Bearer ${getTokenFromLocalStorage()}`;
    }
    return config;
 });
@@ -39,7 +39,6 @@ $api.interceptors.response.use(
                   withCredentials: true,
                }
             );
-            console.log("data", data);
 
             data.accessToken && localStorage.setItem("token", data.accessToken);
 

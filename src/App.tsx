@@ -14,18 +14,15 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "./redux/store";
 import { useEffect } from "react";
 import { authOperations } from "./redux/auth";
+import { getTokenFromLocalStorage } from "./helpers/getTokenFromStorage";
 
 function App() {
    const dispatch = useDispatch<AppDispatch>();
 
-   const token = localStorage.getItem("persist:auth");
-
    useEffect(() => {
-      if (token) {
-         const parsedToken = JSON.parse(token).token.replace(/"/g, "");
+      const token = getTokenFromLocalStorage();
 
-         parsedToken.length > 0 && dispatch(authOperations.checkAuth());
-      }
+      token && dispatch(authOperations.checkAuth());
    }, []);
    return (
       <Routes>

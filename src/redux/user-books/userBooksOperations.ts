@@ -27,7 +27,6 @@ const getBooks = createAsyncThunk("books/get", async (_, thunkAPI) => {
    const state = thunkAPI.getState() as UserState;
 
    const persistedToken = state.auth.token;
-
    if (!persistedToken) {
       return thunkAPI.rejectWithValue({ message: "Please authorize" });
    }

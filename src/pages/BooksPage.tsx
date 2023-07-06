@@ -6,9 +6,9 @@ import { fetchBooks } from "../api/books";
 import { BooksList } from "../components/Books/BooksList";
 import { PaginationComponent } from "../components/Pagination";
 import { useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../redux/store";
+import { AppDispatch } from "../redux/store";
 import { booksOperations } from "../redux/user-books";
-import { useAppSelector } from "../redux/hooks";
+import { getTokenFromLocalStorage } from "../helpers/getTokenFromStorage";
 
 export const BooksPage: FC = () => {
    const [data, setData] = useState<BooksType[]>([initialBook]);
@@ -19,7 +19,6 @@ export const BooksPage: FC = () => {
    const [searchParams, setSearchParams] = useSearchParams();
    const limit = 14;
    const bookQuery = searchParams.get("book") || "";
-   const userId = useAppSelector((state: RootState) => state.auth.user.id);
 
    useEffect(() => {
       const offset = (pageNumber - 1) * limit;
@@ -35,8 +34,11 @@ export const BooksPage: FC = () => {
    }, [query]);
 
    useEffect(() => {
-      dispatch(booksOperations.getBooks());
-   }, [userId]);
+      const token = getTokenFromLocalStorage();
+      if (token) {
+         dispatch(booksOperations.getBooks());
+      }
+   }, []);
 
    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
       event.preventDefault();
