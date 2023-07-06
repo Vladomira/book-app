@@ -48,12 +48,3 @@ export const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-// .addCase(authOperations.checkAuth.rejected, (state, { payload }) => {
-//    state.user = {
-//       email: "",
-//       name: "",
-//       id: "",
-//    };
-//    state.isLoggedIn = false;
-//    state.token = "";
-// });
