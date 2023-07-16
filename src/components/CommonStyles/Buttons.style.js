@@ -56,6 +56,7 @@ export const useStylesButtons = makeStyles(() => ({
       },
    },
    statusBtn: {
+      position: "relative",
       minWidth: "24px !important",
       padding: "3px 3px !important",
       "&:not(:last-child)": { marginRight: "10px" },
@@ -63,6 +64,17 @@ export const useStylesButtons = makeStyles(() => ({
       "&:hover": {
          backgroundColor: "#008080 !important",
       },
+   },
+   statusBtnHint: {
+      position: "absolute",
+      bottom: 30,
+      left: -35,
+      padding: "5px 8px",
+      whiteSpace: "nowrap",
+      color: "rgb(200, 60, 40)",
+      fontWeight: 600,
+      fontSize: "14px",
+      textTransform: "lowercase",
    },
    statusIcon: {
       width: "24px",

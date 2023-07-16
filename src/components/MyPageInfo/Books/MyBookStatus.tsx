@@ -1,11 +1,10 @@
 import { SyntheticEvent, useState } from "react";
-import Button from "@mui/material/Button";
 import { BookStatusProps, PossibleStatus } from "../../../types/book";
 import { AppDispatch } from "../../../redux/store";
 import { useDispatch } from "react-redux";
 import { booksOperations } from "../../../redux/user-books";
 import { booksStatusList } from "./BooksStatusList";
-import { useStylesButtons } from "../../CommonStyles/Buttons.style";
+import { BookStatusHint } from "./BookstatusHint";
 
 type BookStatusWithId = {
    credentials: BookStatusProps;
@@ -19,7 +18,6 @@ export const MyBookStatus = ({ credentials, bookId }: BookStatusWithId) => {
       inProgress,
    });
    const dispatch = useDispatch<AppDispatch>();
-   const btnsClasses = useStylesButtons();
 
    const onHandleChange = (event: SyntheticEvent) => {
       event.preventDefault();
@@ -48,15 +46,12 @@ export const MyBookStatus = ({ credentials, bookId }: BookStatusWithId) => {
       >
          {booksStatusList.map((el) => {
             return (
-               <Button
+               <BookStatusHint
                   key={el.idName}
-                  className={btnsClasses.statusBtn}
-                  type="button"
-                  onClick={(id) => onHandleChange(id)}
-                  id={el.idName}
-               >
-                  {el.iconComponent(status[el.idName] ? "#ff6250" : "#FF9900")}
-               </Button>
+                  onHandleChange={onHandleChange}
+                  el={el}
+                  status={status[el.idName]}
+               />
             );
          })}
       </ul>
