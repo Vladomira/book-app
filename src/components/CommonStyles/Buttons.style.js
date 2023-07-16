@@ -49,10 +49,11 @@ export const useStylesButtons = makeStyles(() => ({
       minWidth: "24px !important",
       color: "#008080  !important",
       padding: "3px 3px !important",
+      transition: "transform 250ms cubic-bezier(0.4, 0, 0.2, 1) !important",
+      transform: "scale(1)",
 
       "&:hover": {
-         backgroundColor: "#008080 !important",
-         color: "#FAEBE2 !important",
+         transform: "scale(1.3)",
       },
    },
    statusBtn: {
@@ -60,10 +61,6 @@ export const useStylesButtons = makeStyles(() => ({
       minWidth: "24px !important",
       padding: "3px 3px !important",
       "&:not(:last-child)": { marginRight: "10px" },
-
-      "&:hover": {
-         backgroundColor: "#008080 !important",
-      },
    },
    statusBtnHint: {
       position: "absolute",

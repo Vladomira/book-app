@@ -5,25 +5,54 @@ import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 
 export interface StatusProps {
    idName: string;
-   iconComponent: (color: string) => ReactElement;
+   iconComponent: (color: string, isHovered: boolean) => ReactElement;
 }
+const transition = "transform 250ms cubic-bezier(0.4, 0, 0.2, 1)";
+
+const iconTransform = (isHovered: boolean) =>
+   isHovered ? "scale(1.3)" : "scale(1)";
+
 export const booksStatusList: StatusProps[] = [
    {
       idName: "favorite",
-      iconComponent(color: string) {
-         return <FavoriteBorderIcon style={{ fill: color }} />;
+      iconComponent(color, isHovered) {
+         return (
+            <FavoriteBorderIcon
+               style={{
+                  fill: color,
+                  transition: transition,
+                  transform: iconTransform(isHovered),
+               }}
+            />
+         );
       },
    },
    {
       idName: "inProgress",
-      iconComponent(color: string) {
-         return <CachedIcon style={{ fill: color }} />;
+      iconComponent(color, isHovered) {
+         return (
+            <CachedIcon
+               style={{
+                  fill: color,
+                  transition: transition,
+                  transform: iconTransform(isHovered),
+               }}
+            />
+         );
       },
    },
    {
       idName: "finished",
-      iconComponent(color: string) {
-         return <CheckCircleOutlineIcon style={{ fill: color }} />;
+      iconComponent(color, isHovered) {
+         return (
+            <CheckCircleOutlineIcon
+               style={{
+                  fill: color,
+                  transition: transition,
+                  transform: iconTransform(isHovered),
+               }}
+            />
+         );
       },
    },
 ];

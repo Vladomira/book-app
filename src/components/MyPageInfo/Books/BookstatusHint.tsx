@@ -18,7 +18,7 @@ export const BookStatusHint = ({ onHandleChange, el, status }: HintProps) => {
    const handleMouseEnter = () => setIsHovered(true);
 
    const handleMouseLeave = () => setIsHovered(false);
-
+   const iconColor = status ? "rgb(200, 60, 40)" : "#FF9900";
    return (
       <Button
          className={btnsClasses.statusBtn}
@@ -28,7 +28,7 @@ export const BookStatusHint = ({ onHandleChange, el, status }: HintProps) => {
          onMouseEnter={handleMouseEnter}
          onMouseLeave={handleMouseLeave}
       >
-         {el.iconComponent(status ? "rgb(200, 60, 40)" : "#FF9900")}
+         {el.iconComponent(iconColor, isHovered)}
          {isHovered && (
             <p className={btnsClasses.statusBtnHint}>
                {separateWords(el.idName)}
