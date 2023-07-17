@@ -8,6 +8,7 @@ export type FormData = {
    name: string;
    email: string;
    password: string;
+   checkPassword: string;
 };
 export type FormUserData = FormData & { id: string };
 export interface AuthState {

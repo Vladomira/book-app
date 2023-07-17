@@ -40,6 +40,7 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
       fetchById(id)
          .then((data) => {
             const accessInfo = data.accessInfo;
+
             if (accessInfo?.epub.isAvailable) {
                const epubLink = accessInfo?.epub?.acsTokenLink;
                setBookFormat((prev) => {
@@ -59,6 +60,7 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
             return new Error(error);
          });
    }, []);
+
    useEffect(() => {
       const matchingBook = books.find((el) => el.bookId === id);
 

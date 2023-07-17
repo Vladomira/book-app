@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { TextField, Button } from "@material-ui/core";
@@ -20,22 +20,24 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
       register,
       handleSubmit,
       reset,
+      watch,
       formState: { errors },
    } = useForm<FormData>();
+   const password = useRef({});
+   password.current = watch("password", "");
    const dispatch = useDispatch<AppDispatch>();
    const classes = useStylesAuth();
    const btnClass = useStylesButtons();
    const navigate = useNavigate();
 
    const onSubmit = (data: FormData) => {
-      const { name, email, password } = data;
       switch (switcher) {
          case "Sign up":
-            dispatch(authOperations.register({ name, email, password }));
+            dispatch(authOperations.register(data));
             break;
 
          case "Log in":
-            dispatch(authOperations.logIn({ email, password }));
+            dispatch(authOperations.logIn(data));
             break;
       }
       reset();
@@ -84,6 +86,21 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
             autoComplete="off"
             className={classes.input}
          />
+         {switcher === "Sign up" && (
+            <TextField
+               {...register("checkPassword", {
+                  required: "Confirm Password is required",
+                  validate: (value) =>
+                     value === watch("password") || "Passwords do not match",
+               })}
+               label="Confirm Password"
+               type="password"
+               error={!!errors.checkPassword}
+               helperText={errors.checkPassword?.message}
+               autoComplete="off"
+               className={classes.input}
+            />
+         )}
 
          <Button
             type="submit"

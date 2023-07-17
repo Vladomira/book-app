@@ -1,5 +1,5 @@
 import { SyntheticEvent, useState } from "react";
-import { useStylesButtons } from "../../CommonStyles/Buttons.style";
+import { useStylesButtons } from "../CommonStyles/Buttons.style";
 import Button from "@mui/material/Button";
 import { StatusProps } from "./BooksStatusList";
 

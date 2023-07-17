@@ -16,13 +16,22 @@ export const DownLoadBox: FC<DownLoadBoxProps> = ({ pdf, epub }) => {
       <Box className={classes.downloadBox}>
          {pdf && (
             <Link href={pdf} className={classes.downloadLink}>
-               <PictureAsPdfIcon className={classes.downloadLink} />
+               <p
+                  className={classes.downloadLink}
+                  style={{ marginRight: "10px" }}
+               >
+                  {" "}
+                  download
+               </p>
+
+               {/* <PictureAsPdfIcon className={classes.downloadLink} /> */}
             </Link>
          )}
          {epub && (
             <Link href={epub} className={classes.downloadLink}>
-               EPUB
-               <GetAppIcon className={classes.downloadLink} />
+               {/* EPUB */}
+               <p className={classes.downloadLink}>download</p>
+               {/* <GetAppIcon className={classes.downloadLink} /> */}
             </Link>
          )}
          <Link href={`${converterLink}`} className={classes.converter}>

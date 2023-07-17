@@ -6,6 +6,8 @@ export type BookVolumeInfo = {
       large: string;
       small: string;
    };
+
+   industryIdentifiers: { type: string; identifier: string }[];
    pageCount: number;
    publishedDate: string;
    publisher: string;
@@ -17,26 +19,12 @@ export type BookVolumeInfo = {
 export type BooksType = {
    id: string;
    volumeInfo: BookVolumeInfo;
-   // volumeInfo: {
-   //    authors: string[];
-   //    imageLinks: {
-   //       smallThumbnail: string;
-   //       thumbnail: string;
-   //       large: string;
-   //       small: string;
-   //    };
-   //    pageCount: number;
-   //    publishedDate: string;
-   //    publisher: string;
-   //    categories: string[];
-   //    title: string;
-   //    averageRating: number;
-   //    description: string;
-   // };
+   selfLink: string;
    dbId?: number;
 };
 export const initialBook: BooksType = {
    id: "",
+   selfLink: "",
    volumeInfo: {
       authors: [""],
       imageLinks: { smallThumbnail: "", thumbnail: "", large: "", small: "" },
@@ -47,6 +35,7 @@ export const initialBook: BooksType = {
       title: "",
       averageRating: 0,
       description: "",
+      industryIdentifiers: [{ type: "", identifier: "" }],
    },
 };
 

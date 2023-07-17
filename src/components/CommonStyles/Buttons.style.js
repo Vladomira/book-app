@@ -80,9 +80,11 @@ export const useStylesButtons = makeStyles(() => ({
       minWidth: "24px",
       padding: "3px 3px !important",
       color: "#FF7F50  !important",
+      transform: "scale(1)",
+      transition: "transform 250ms cubic-bezier(0.4, 0, 0.2, 1) !important",
 
       "&:hover": {
-         backgroundColor: "#008080 !important",
+         transform: "scale(1.4)",
       },
    },
    closeBtn: {

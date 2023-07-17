@@ -1,8 +1,8 @@
 import { SyntheticEvent, useState } from "react";
-import { BookStatusProps, PossibleStatus } from "../../../types/book";
-import { AppDispatch } from "../../../redux/store";
+import { BookStatusProps, PossibleStatus } from "../../types/book";
+import { AppDispatch } from "../../redux/store";
 import { useDispatch } from "react-redux";
-import { booksOperations } from "../../../redux/user-books";
+import { booksOperations } from "../../redux/user-books";
 import { booksStatusList } from "./BooksStatusList";
 import { BookStatusHint } from "./BookstatusHint";
 

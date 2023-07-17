@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { booksOperations } from "../redux/user-books";
 import { notesOperations } from "../redux/user-notes";
-import { BooksCarousel } from "../components/MyPageInfo/Books/BooksCarousel";
+import { BooksCarousel } from "../components/MyPageInfo/BooksCarousel";
 import { PageNav } from "../components/PageNav";
 import { MyNotesList } from "../components/MyNotes";
 import { ReceivedNote } from "../types/note";
