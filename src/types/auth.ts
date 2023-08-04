@@ -4,9 +4,7 @@ export type UserData = {
    id: string;
 };
 
-export type FormData = {
-   name: string;
-   email: string;
+export type FormData = Pick<UserData, "email" | "name"> & {
    password: string;
    checkPassword: string;
 };
@@ -24,11 +22,12 @@ export const initialState: AuthState = {
    isLoggedIn: false,
    error: "",
 };
-export const initialUserForm = {
+export const initialUserForm: FormUserData = {
    id: "",
    name: "",
    email: "",
    password: "",
+   checkPassword: "",
 };
 export type UserState = { auth: AuthState };
 

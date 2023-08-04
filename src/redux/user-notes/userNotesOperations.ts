@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { UserState } from "../../types/auth";
-import { CreateNote, NoteProps } from "../../types/note";
+import { NoteProps } from "../../types/note";
 import $api from "../../api/interceptor";
 
 const createNote = createAsyncThunk(
