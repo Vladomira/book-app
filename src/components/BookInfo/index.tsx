@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from "react";
+import { parse } from "node-html-parser";
 import { SinglePageProps } from "../../types";
 import { toast } from "react-toastify";
 import { Notification } from "../Notification";
@@ -105,7 +106,7 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
 
                <TextComponent
                   className={classes.info}
-                  text={volumeInfo.description}
+                  text={parse(volumeInfo.description)?.text}
                />
             </>
          )}
