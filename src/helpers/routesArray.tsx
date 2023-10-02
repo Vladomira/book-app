@@ -14,8 +14,12 @@ interface Routes {
 export const routes: Routes[] = [
    { path: "/", RequireAuth: false, element: <BooksPage /> },
    { path: "/:id", RequireAuth: false, element: <BookPage /> },
-   { path: "auth", RequireAuth: false, element: <AuthPage /> },
-   { path: "user/:userId", RequireAuth: true, element: <MyPage /> },
-   { path: "user/:userId/my-notes", RequireAuth: true, element: <NotesPage /> },
+   { path: "/auth", RequireAuth: false, element: <AuthPage /> },
+   { path: "/user/:userId", RequireAuth: true, element: <MyPage /> },
+   {
+      path: "/user/:userId/my-notes",
+      RequireAuth: true,
+      element: <NotesPage />,
+   },
    { path: "/*", RequireAuth: false, element: <NotfoundPage /> },
 ];
