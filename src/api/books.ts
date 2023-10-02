@@ -1,6 +1,5 @@
 const url = "https://www.googleapis.com/books/v1/volumes";
 const configUrl = "&country=IN&langRestrict=en";
-// const ApiKey = "AIzaSyDyOmRZlMhsG5lRQl5Xb4ObRxZ0hY5uaOU";
 
 export const fetchBooks = async (
    query: string,
