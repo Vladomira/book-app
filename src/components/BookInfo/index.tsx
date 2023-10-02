@@ -93,6 +93,7 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
          toast.success("Book was added");
       }
    };
+   console.log(volumeInfo);
 
    return (
       <Box style={{ paddingBottom: "50px" }}>
@@ -108,8 +109,8 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
                   className={classes.info}
                   text={
                      volumeInfo?.description
-                        ? parse(volumeInfo.description)?.text
-                        : ""
+                     // ? parse(volumeInfo.description)?.text
+                     // : ""
                   }
                />
             </>
