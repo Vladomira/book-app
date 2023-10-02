@@ -106,7 +106,11 @@ export const BookInfo: FC<SinglePageProps> = ({ id }) => {
 
                <TextComponent
                   className={classes.info}
-                  text={parse(volumeInfo.description)?.text}
+                  text={
+                     volumeInfo.description
+                        ? parse(volumeInfo.description)?.text
+                        : ""
+                  }
                />
             </>
          )}

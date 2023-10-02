@@ -6,7 +6,12 @@ import { MyPage } from "../pages/MyPage";
 import { NotesPage } from "../pages/NotesPage";
 import { NotfoundPage } from "../pages/NotfoundPage";
 
-export const routes = [
+interface Routes {
+   path: string;
+   RequireAuth: boolean;
+   element: JSX.Element;
+}
+export const routes: Routes[] = [
    { path: "/", RequireAuth: false, element: <BooksPage /> },
    { path: "/:id", RequireAuth: false, element: <BookPage /> },
    { path: "auth", RequireAuth: false, element: <AuthPage /> },
