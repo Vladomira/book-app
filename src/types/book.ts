@@ -16,6 +16,7 @@ export type BookVolumeInfo = {
    averageRating: number;
    description: string;
 };
+
 export type BooksType = {
    id: string;
    volumeInfo: BookVolumeInfo;
