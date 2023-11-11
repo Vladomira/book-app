@@ -1,4 +1,4 @@
-import { useEffect, FC, useRef } from "react";
+import { useEffect, FC, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { TextField, Button } from "@material-ui/core";
@@ -13,6 +13,7 @@ import { useStylesButtons } from "../CommonStyles/Buttons.style";
 import { toast } from "react-toastify";
 import { useAppSelector } from "../../redux/hooks";
 import { emailPattern, passwordPattern } from "../../constants/formPatterns";
+import { PasswordVisibility } from "./PasswordVisibility";
 
 export const AuthForm: FC<FormProps> = ({ switcher }) => {
    const {
@@ -29,6 +30,8 @@ export const AuthForm: FC<FormProps> = ({ switcher }) => {
    const btnClass = useStylesButtons();
    const navigate = useNavigate();
    const user = useAppSelector((state: RootState) => state.auth.user);
+   const [showPassword, setShowPassword] = useState(false);
+   const [showConfirm, setShowConfirm] = useState(false);
 
    const onSubmit = async (data: FormData) => {
       let action;
@@ -68,6 +71,7 @@ export const AuthForm: FC<FormProps> = ({ switcher }) => {
                helperText={errors.name?.message}
                autoComplete="off"
                className={classes.input}
+               placeholder="Tom"
             />
          )}
 
@@ -78,17 +82,28 @@ export const AuthForm: FC<FormProps> = ({ switcher }) => {
             helperText={errors.email?.message}
             autoComplete="off"
             className={classes.input}
+            placeholder="example@gmail.com"
          />
 
          <TextField
             {...register("password", passwordPattern)}
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             error={!!errors.password}
             helperText={errors.password?.message}
             autoComplete="off"
             className={classes.input}
+            placeholder="*******"
+            InputProps={{
+               endAdornment: (
+                  <PasswordVisibility
+                     setShowPassword={setShowPassword}
+                     showPassword={showPassword}
+                  />
+               ),
+            }}
          />
+
          {switcher === "Sign up" && (
             <TextField
                {...register("checkPassword", {
@@ -97,11 +112,20 @@ export const AuthForm: FC<FormProps> = ({ switcher }) => {
                      value === watch("password") || "Passwords do not match",
                })}
                label="Confirm Password"
-               type="password"
+               type={showConfirm ? "text" : "password"}
                error={!!errors.checkPassword}
                helperText={errors.checkPassword?.message}
                autoComplete="off"
                className={classes.input}
+               placeholder="*******"
+               InputProps={{
+                  endAdornment: (
+                     <PasswordVisibility
+                        setShowPassword={setShowConfirm}
+                        showPassword={showConfirm}
+                     />
+                  ),
+               }}
             />
          )}
 

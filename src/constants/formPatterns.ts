@@ -1,3 +1,5 @@
+import { FormFieldPattern } from "../types/form";
+
 export const emailPattern = {
    required: "Email is required",
    pattern: {
@@ -5,7 +7,8 @@ export const emailPattern = {
       message: "Invalid email format",
    },
 };
-export const passwordPattern = {
+
+export const passwordPattern: FormFieldPattern = {
    required: "Password is required",
    minLength: {
       value: 6,

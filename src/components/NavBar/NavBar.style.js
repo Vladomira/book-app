@@ -2,14 +2,10 @@ import { makeStyles } from "@material-ui/core";
 
 export const useStylesNavBar = makeStyles(() => ({
    header: {
-      // backgroundColor: "#003333 !important",
       backgroundColor: "#004C4C !important",
-      // 006B6B
    },
    container: {
       padding: "100px 30px 30px",
-      // backgroundColor: "#004C4C",
-      // backgroundColor: "#008080",
    },
 
    navBar: {
@@ -31,7 +27,6 @@ export const useStylesNavBar = makeStyles(() => ({
 
       "&:hover": {
          color: "#FFA500 !important",
-         // FF7F50
          borderBottom: "1px solid #FFA500",
       },
       "&:not(:last-child)": {
@@ -51,9 +46,6 @@ export const useStylesNavBar = makeStyles(() => ({
       border: "none",
       cursor: "pointer",
       color: "#FF7F50",
-      // red: #FF0000  deep #800000
-      // orange:' #FFA500 FF7F50
-      // greay #333333
       padding: "0px",
       marginLeft: "5px",
    },

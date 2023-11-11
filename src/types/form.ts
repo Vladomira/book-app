@@ -8,3 +8,14 @@ export type AuthSwitcherProps = {
 export type FormProps = {
    switcher: SwitchForm;
 };
+export type FormFieldPattern = {
+   required: string;
+   minLength: {
+      value: number;
+      message: string;
+   };
+};
+export interface PasswordVisibilityProps {
+   setShowPassword: (prop: boolean) => void;
+   showPassword: boolean;
+}
