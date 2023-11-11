@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import CachedIcon from "@material-ui/icons/Cached";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";

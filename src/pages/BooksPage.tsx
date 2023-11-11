@@ -1,14 +1,14 @@
-import { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FiltredBlock } from "../components/Filter";
 import { BooksType, initialBook } from "../types/book";
 import { fetchBooks } from "../api/books";
-import { BooksList } from "../components/Books/BooksList";
+import { BooksList } from "../components/BooksList/BooksList";
 import { PaginationComponent } from "../components/Pagination";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
 import { booksOperations } from "../redux/user-books";
-import { getTokenFromLocalStorage } from "../helpers/getTokenFromStorage";
+import { toast } from "react-toastify";
 
 export const BooksPage: FC = () => {
    const [data, setData] = useState<BooksType[]>([initialBook]);
@@ -17,40 +17,52 @@ export const BooksPage: FC = () => {
    const [query, setQuery] = useState("");
    const dispatch = useDispatch<AppDispatch>();
    const [searchParams, setSearchParams] = useSearchParams();
-   const limit = 14;
+   const limit = 10;
    const bookQuery = searchParams.get("book") || "";
 
-   useEffect(() => {
+   const getBooks = useCallback(async () => {
       const offset = (pageNumber - 1) * limit;
-      dispatch(booksOperations.getBooks());
-      fetchBooks(query, limit, offset)
-         .then((data) => {
-            const count = Math.floor(data.totalItems / limit);
+      try {
+         const response = await fetchBooks(query, limit, offset);
+         if (response?.items?.length > 0) {
+            setData(response.items);
+            return response.totalItems;
+         } else {
+            toast.warn("Sorry, this page is empty");
+            return 0;
+         }
+      } catch (error) {
+         throw error;
+      }
+   }, [query, pageNumber, limit]);
 
-            setCountPage(count - 11);
-            setData([...data.items]);
-         })
-         .catch(console.error);
+   const handleBooksFetch = async () => {
+      try {
+         const total = await getBooks();
+         const count = Math.ceil(total / limit);
+         setCountPage(count);
+      } catch (error) {
+         console.error(error);
+      }
+   };
+
+   useEffect(() => {
+      dispatch(booksOperations.getBooks());
+      handleBooksFetch();
    }, [query]);
 
    useEffect(() => {
-      const token = getTokenFromLocalStorage();
-      if (token) {
-         dispatch(booksOperations.getBooks());
-      }
-   }, []);
+      const fetchBooks = async () => {
+         try {
+            dispatch(booksOperations.getBooks());
+            await getBooks();
+         } catch (error) {
+            console.error("Error fetching books:", error);
+         }
+      };
 
-   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-      event.preventDefault();
-      setPageNumber(value);
-
-      const offset = (value - 1) * limit;
-      fetchBooks(query, limit, offset)
-         .then((data) => {
-            setData([...data.items]);
-         })
-         .catch(console.error);
-   };
+      fetchBooks();
+   }, [pageNumber]);
 
    return (
       <>
@@ -59,14 +71,19 @@ export const BooksPage: FC = () => {
             setQuery={setQuery}
             setSearchParams={setSearchParams}
          />
-         <BooksList books={data} bookQuery={bookQuery} />
+         {data?.length > 0 && (
+            <>
+               <BooksList books={data} bookQuery={bookQuery} />
 
-         {data.length > 0 && (
-            <PaginationComponent
-               count={countPage}
-               page={pageNumber}
-               onChange={handleChange}
-            />
+               <PaginationComponent
+                  count={countPage}
+                  page={pageNumber}
+                  onChange={(
+                     event: React.ChangeEvent<unknown>,
+                     value: number
+                  ) => setPageNumber(value)}
+               />
+            </>
          )}
       </>
    );

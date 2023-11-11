@@ -9,10 +9,11 @@ export const BooksList: FC<BooksListPros> = ({ books, bookQuery }) => {
    const classes = useStylesBooks();
    return (
       <List className={classes.list}>
-         {books.length > 0 &&
-            books
-               .filter((book) => book.volumeInfo.title.includes(bookQuery))
-               .map((el) => <BookItem key={el.id} el={el} />)}
+         {books
+            .filter((book) => book.volumeInfo.title.includes(bookQuery))
+            .map((el) => (
+               <BookItem key={el.id} el={el} />
+            ))}
       </List>
    );
 };

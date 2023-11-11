@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Typography } from "@mui/material";
-import { useStylesBookItem } from "../CommonStyles/BookItem.style";
+import { useStylesBookItem } from "./Books.style";
 
 type BookInfoBoxProps = {
    title: string;
@@ -16,7 +16,7 @@ export const BookInfoBox: FC<BookInfoBoxProps> = ({ title, categories }) => {
    return (
       <div className={bookClasses.bookInfoBox}>
          <Typography className={bookClasses.bookInfoTitle}>
-            {title.slice(0, 28)}
+            {title.length > 20 ? `${title.slice(0, 28)}...` : title}
          </Typography>
 
          <Typography className={bookClasses.bookInfoCategories}>

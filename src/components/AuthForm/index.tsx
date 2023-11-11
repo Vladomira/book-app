@@ -1,21 +1,20 @@
-import React, { useRef } from "react";
+import { useEffect, FC, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { TextField, Button } from "@material-ui/core";
 
 import { FormData } from "../../types/auth";
-import { SwitchForm } from "../../types/form";
-import { AppDispatch } from "../../redux/store";
+import { FormProps } from "../../types/form";
+import { AppDispatch, RootState } from "../../redux/store";
 import { authOperations } from "../../redux/auth";
 import { useStylesAuth } from "./Auth.style";
 import { useNavigate } from "react-router-dom";
 import { useStylesButtons } from "../CommonStyles/Buttons.style";
+import { toast } from "react-toastify";
+import { useAppSelector } from "../../redux/hooks";
+import { emailPattern, passwordPattern } from "../../constants/formPatterns";
 
-type FormProps = {
-   switcher: SwitchForm;
-};
-
-export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
+export const AuthForm: FC<FormProps> = ({ switcher }) => {
    const {
       register,
       handleSubmit,
@@ -29,20 +28,36 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
    const classes = useStylesAuth();
    const btnClass = useStylesButtons();
    const navigate = useNavigate();
+   const user = useAppSelector((state: RootState) => state.auth.user);
 
-   const onSubmit = (data: FormData) => {
+   const onSubmit = async (data: FormData) => {
+      let action;
       switch (switcher) {
          case "Sign up":
-            dispatch(authOperations.register(data));
+            action = await dispatch(authOperations.register(data));
             break;
 
          case "Log in":
-            dispatch(authOperations.logIn(data));
+            action = await dispatch(authOperations.logIn(data));
             break;
       }
-      reset();
-      navigate("/");
+
+      if (
+         authOperations.register.rejected.match(action) ||
+         authOperations.logIn.rejected.match(action)
+      ) {
+         toast.error(`Error: ${action.payload}`);
+      } else {
+         reset();
+      }
    };
+   useEffect(() => {
+      if (user.email) {
+         toast.success(`You entered as ${user.name}`);
+         navigate("/");
+      }
+   }, [user]);
+
    return (
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
          {switcher === "Sign up" && (
@@ -57,13 +72,7 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
          )}
 
          <TextField
-            {...register("email", {
-               required: "Email is required",
-               pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: "Invalid email format",
-               },
-            })}
+            {...register("email", emailPattern)}
             label="Email"
             error={!!errors.email}
             helperText={errors.email?.message}
@@ -72,13 +81,7 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
          />
 
          <TextField
-            {...register("password", {
-               required: "Password is required",
-               minLength: {
-                  value: 6,
-                  message: "Password must be at least 6 characters long",
-               },
-            })}
+            {...register("password", passwordPattern)}
             label="Password"
             type="password"
             error={!!errors.password}
@@ -89,7 +92,7 @@ export const AuthForm: React.FC<FormProps> = ({ switcher }) => {
          {switcher === "Sign up" && (
             <TextField
                {...register("checkPassword", {
-                  required: "Confirm Password is required",
+                  required: "Password is required",
                   validate: (value) =>
                      value === watch("password") || "Passwords do not match",
                })}

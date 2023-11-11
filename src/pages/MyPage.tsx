@@ -8,7 +8,7 @@ import { BooksCarousel } from "../components/MyPageInfo/BooksCarousel";
 import { PageNav } from "../components/PageNav";
 import { MyNotesList } from "../components/MyNotes";
 import { ReceivedNote } from "../types/note";
-import { useStylesBook } from "../components/BookInfo/Book.style";
+import { useStylesBook } from "../components/BookPageInfo/Book.style";
 
 export const MyPage = () => {
    const userId = useAppSelector((state: RootState) => state.auth.user.id);

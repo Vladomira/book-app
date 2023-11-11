@@ -5,13 +5,13 @@ import { Typography, Button } from "@mui/material";
 import { toast } from "react-toastify";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { MyBookStatus } from "./MyBookStatus";
-import { useStylesBookItem } from "../CommonStyles/BookItem.style";
 import { useStylesCarousel } from "../Slider/Slider.style";
 import { useStylesButtons } from "../CommonStyles/Buttons.style";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store";
 import { booksOperations } from "../../redux/user-books";
 import { BookWithId } from "../../types/book";
+import { useStylesBookItem } from "../BooksList/Books.style";
 
 type CarouselBookItemProps = { book: BookWithId };
 export const CarouselBookItem: FC<CarouselBookItemProps> = ({ book }) => {
@@ -19,6 +19,7 @@ export const CarouselBookItem: FC<CarouselBookItemProps> = ({ book }) => {
    const bookClasses = useStylesBookItem();
    const btnClass = useStylesButtons();
    const dispatch = useDispatch<AppDispatch>();
+
    return (
       <Box className={classes.slide}>
          <Link
@@ -28,7 +29,9 @@ export const CarouselBookItem: FC<CarouselBookItemProps> = ({ book }) => {
          >
             <img className={classes.itemImg} src={book.image} alt="" />
             <Typography className={bookClasses.bookInfoTitle}>
-               {book.title.slice(0, 28)}
+               {book.title.length > 20
+                  ? `${book.title.slice(0, 28)}...`
+                  : book.title}
             </Typography>
          </Link>
 

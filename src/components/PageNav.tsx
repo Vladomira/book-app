@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { useStylesButtons } from "./CommonStyles/Buttons.style";
-import { useStylesBook } from "./BookInfo/Book.style";
+import { useStylesBook } from "./BookPageInfo/Book.style";
 
 export const PageNav: FC = () => {
    const navigate = useNavigate();

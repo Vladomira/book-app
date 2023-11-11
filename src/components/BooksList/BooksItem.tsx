@@ -5,23 +5,17 @@ import { useDispatch } from "react-redux";
 import { booksOperations } from "../../redux/user-books";
 import { Button, ListItem } from "@mui/material";
 import { toast } from "react-toastify";
-import { useStylesBooks } from "./Books.style";
+import { useStylesBooks, useStylesBookItem } from "./Books.style";
 import { BookInfoBox } from "./BooksInfoBox";
-import { useStylesBookItem } from "../CommonStyles/BookItem.style";
 import { useAppSelector } from "../../redux/hooks";
-import { Notification } from "../Notification";
 import { getAuthor, getImage } from "../../helpers/getFromBook";
 
-type BookItemProps = {
-   el: BooksType;
-};
-
-export const BookItem = ({ el }: BookItemProps) => {
+export const BookItem = ({ el }: { el: BooksType }) => {
    const userId = useAppSelector((state: RootState) => state.auth.user.id);
    const dispatch = useDispatch<AppDispatch>();
    const userBooks = useAppSelector((state: RootState) => state.books);
    const classes = useStylesBooks();
-   const bookClasses = useStylesBookItem();
+   const bookItemClasses = useStylesBookItem();
 
    const addBook = () => {
       if (!userId) {
@@ -58,12 +52,11 @@ export const BookItem = ({ el }: BookItemProps) => {
             }
             type="button"
             onClick={() => addBook()}
-            className={bookClasses.bookButton}
+            className={bookItemClasses.bookButton}
             variant="outlined"
          >
             Add to my
          </Button>
-         <Notification />
       </ListItem>
    );
 };

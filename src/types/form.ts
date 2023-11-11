@@ -5,3 +5,6 @@ export type AuthSwitcherProps = {
    isAccount: string;
    authButtonText: SwitchForm;
 };
+export type FormProps = {
+   switcher: SwitchForm;
+};

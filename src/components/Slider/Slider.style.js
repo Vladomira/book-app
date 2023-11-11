@@ -6,6 +6,8 @@ export const useStylesCarousel = makeStyles(() => ({
 
       "& >.slick-list>.slick-track": {
          marginLeft: "0px",
+         display: "flex !important",
+         alignItems: "stretch",
       },
       "& >.slick-list": {
          overflowX: "clip",
@@ -13,6 +15,7 @@ export const useStylesCarousel = makeStyles(() => ({
       },
       "& .slick-slide": {
          width: "180px !important",
+
          "&:not(:last-child)": {
             marginRight: "35px !important",
          },
